@@ -82,7 +82,8 @@ Diese musst du in deinem Plugin in der `permissions`-Liste angeben.
 
 ## Infos zum Plugin
 
-- Dein Plugin muss im Ordner `src/plugins/<deinName_suffix>` liegen.  
+- Dein Plugin muss im Ordner `src/plugins/<deinName_suffix>` liegen.
+- Jedes Plugin bekommt einen eigenen Ordner!
 - Es muss mindestens folgende Felder in `index.ts` enthalten:
 
 ```ts

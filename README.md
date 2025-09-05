@@ -1,13 +1,19 @@
 # Microkernel Plugin Aufgabe
 
 ## Ziel der Aufgabe
-Du entwickelst ein eigenes **Plugin** für das bestehende Microkernel-System.  
+Du entwickelst ein eigenes **Provider-Plugin** und ein **Consumer-Plugin** für das bestehende Microkernel-System.  
 Die Aufgabe wird **in Einzelarbeit** bearbeitet und ist mit **maximal 5 Punkten** bewertet.
 
-Dein Plugin soll:
+Deine Plugins sollen:
 1. Sich korrekt beim `pluginManager` registrieren.  
 2. **Mindestens eine Funktion** implementieren, die Daten **liest** und **verändert**.  
-3. Mit den **Permissions** arbeiten, die das Kernel-System bereitstellt.  
+3. Mit den **Permissions** arbeiten, die das Kernel-System bereitstellt.
+
+Das Provider-Plugin soll:
+1. Eine neue **Variable/Entity/Datenstruktur** sowie mindestens eine neue **Permission** bereitstellen.
+   
+Das Consumer-Plugin soll:
+1. Die neue Permission und Datenstruktur **nutzen**.
 
 ---
 
@@ -16,7 +22,7 @@ Dein Plugin soll:
 Im Kernel existieren folgende Daten:
 
 ```ts
-type Address = {
+export type Address = {
   street: string;
   houseNr: string;
   zipCode: string;
@@ -24,7 +30,7 @@ type Address = {
   country: string;
 };
 
-type KernelData = {
+export type KernelData = {
   users: {
     id: string;
     firstName: string;
@@ -37,6 +43,7 @@ type KernelData = {
   shoppingList: { id: string; item: string; qty: number }[];
   profileImage: string | null;
   todos: { id: string; text: string; done: boolean }[];
+  entities: Record<string, unknown>;
 };
 ```
 

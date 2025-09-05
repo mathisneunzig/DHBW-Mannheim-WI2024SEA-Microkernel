@@ -77,9 +77,9 @@ Diese musst du in deinem Plugin in der `permissions`-Liste angeben.
 
 ---
 
-## Anforderungen an dein Plugin
+## Infos zum Plugin
 
-- Dein Plugin muss im Ordner `src/plugins/<deinName>` liegen.  
+- Dein Plugin muss im Ordner `src/plugins/<deinName_suffix>` liegen.  
 - Es muss mindestens folgende Felder in `index.ts` enthalten:
 
 ```ts
@@ -94,10 +94,6 @@ pluginManager.register({
   permissions: ["<benötigte Permissions>"]
 });
 ```
-
-- Deine Page-Komponente soll:
-  - Daten **lesen** (z. B. `todos` oder `users`)  
-  - Daten **ändern** (z. B. neuen Todo-Eintrag hinzufügen, einen Todo abhaken, ein neues Item in die Einkaufsliste legen, Profilbild ändern, neuen User anlegen, etc.)  
 
 ---
 

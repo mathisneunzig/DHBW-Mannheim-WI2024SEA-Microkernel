@@ -1,54 +1,52 @@
 import React from "react";
 import { pluginManager } from "../app/pluginManager";
-import { Box, Typography, Grid, Card, CardContent, Link, Alert, List, ListItem } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
 export const Home: React.FC = () => {
-  const plugins = pluginManager.getPlugins();
+  const plugins = pluginManager.getVisiblePlugins();
   const invalids = pluginManager.getInvalidPlugins();
 
   return (
-    <Box sx={{ p: 4 }}>
-      <Typography variant="h2" align="center" gutterBottom>
-        Willkommen zur Microkernel App
-      </Typography>
-
-      <Grid container spacing={3} justifyContent="center">
+    <div style={{ padding: 24 }}>
+      <h2 style={{ textAlign: "center" }}>Microkernel Home</h2>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px,1fr))", gap: 16 }}>
         {plugins.map((plugin) => (
-          <Grid key={plugin.id} size={{ xs: 4, md: 2 }}>
-            <Link href={plugin.route} underline="none" color="black">
-              <Card variant="outlined" sx={{
-                position:"relative", width:"100%", paddingTop:"100%",
-                background:`linear-gradient(${plugin.spin}deg, ${plugin.color1}, ${plugin.color2})`
+          <RouterLink key={plugin.id} to={plugin.route} style={{ textDecoration: "none", color: "inherit" }}>
+            <div style={{
+              position: "relative",
+              width: "100%",
+              paddingTop: "100%",
+              background: `linear-gradient(${plugin.spin}deg, ${plugin.color1}, ${plugin.color2})`,
+              borderRadius: 12,
+              boxShadow: "0 2px 10px rgba(0,0,0,0.15)"
+            }}>
+              <div style={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontWeight: 600
               }}>
-                <CardContent sx={{
-                  position:"absolute", inset:0, display:"flex", justifyContent:"center", alignItems:"center"
-                }}>
-                  <Typography variant="body1" align="center" gutterBottom>
-                    {plugin.tile}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Link>
-          </Grid>
+                {plugin.tile}
+              </div>
+            </div>
+          </RouterLink>
         ))}
-      </Grid>
+      </div>
 
       {invalids.length > 0 && (
-        <Box sx={{ mt: 4 }}>
-          <Alert severity="warning" sx={{ mb: 1 }}>
-            Einige Plugins sind nicht sichtbar, weil sie fehlerhaft konfiguriert sind:
-          </Alert>
-          <List dense>
+        <div style={{ marginTop: 24 }}>
+          <div style={{ fontWeight: 700, marginBottom: 8 }}>Fehlerhafte Plugins</div>
+          <ul style={{ margin: 0, paddingLeft: 18 }}>
             {invalids.map(iv => (
-              <ListItem key={iv.id} sx={{ display:"list-item", listStyle:"disc", ml: 3 }}>
-                <Typography variant="body2">
-                  <strong>{iv.id}</strong>: {iv.errors.join("; ")}
-                </Typography>
-              </ListItem>
+              <li key={iv.id}>
+                <span style={{ fontWeight: 600 }}>{iv.id}</span>: {iv.errors.join("; ")}
+              </li>
             ))}
-          </List>
-        </Box>
+          </ul>
+        </div>
       )}
-    </Box>
+    </div>
   );
 };

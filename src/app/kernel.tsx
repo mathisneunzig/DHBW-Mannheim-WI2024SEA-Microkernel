@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, useReducer, useEffect } from "react";
+import React, { createContext, useContext, useMemo, useReducer, useEffect, useRef } from "react";
 
 export type Address = {
   street: string;
@@ -21,6 +21,7 @@ export type KernelData = {
   shoppingList: { id: string; item: string; qty: number }[];
   profileImage: string | null;
   todos: { id: string; text: string; done: boolean }[];
+  entities: Record<string, unknown>;
 };
 
 export type Permission =
@@ -43,7 +44,9 @@ type Cmd =
   | { type: "shopping.remove"; id: string }
   | { type: "profile.set"; dataUrl: string | null }
   | { type: "todo.add"; text: string }
-  | { type: "todo.toggle"; id: string };
+  | { type: "todo.toggle"; id: string }
+  | { type: "entity.set"; entity: string; next: unknown }
+  | { type: "entity.exec"; entity: string; command: string; payload: unknown };
 
 function reducer(state: KernelData, cmd: Cmd): KernelData {
   switch (cmd.type) {
@@ -89,6 +92,13 @@ function reducer(state: KernelData, cmd: Cmd): KernelData {
           t.id === cmd.id ? { ...t, done: !t.done } : t
         ),
       };
+    case "entity.set":
+      return {
+        ...state,
+        entities: { ...state.entities, [cmd.entity]: cmd.next },
+      };
+    case "entity.exec":
+      return state;
     default:
       return state;
   }
@@ -97,6 +107,8 @@ function reducer(state: KernelData, cmd: Cmd): KernelData {
 export type KernelAPI = {
   data: Readonly<KernelData>;
   dispatch: (cmd: Cmd) => void;
+  registerEntity: (entity: string, initial: unknown, commands: Record<string, (state: unknown, payload: unknown) => unknown>) => void;
+  execEntity: (entity: string, command: string, payload: unknown) => void;
 };
 
 const KernelCtx = createContext<KernelAPI | null>(null);
@@ -106,7 +118,7 @@ type KernelProviderProps = {
   children: React.ReactNode;
 };
 
-const STORAGE_KEY = "kernelState:v1";
+const STORAGE_KEY = "kernelState:v2";
 
 function revive(data: any): KernelData {
   return {
@@ -115,10 +127,12 @@ function revive(data: any): KernelData {
       ...u,
       birthday: u.birthday ? new Date(u.birthday) : new Date(),
     })),
+    entities: data.entities ?? {},
   };
 }
 
 export const KernelProvider: React.FC<KernelProviderProps> = ({ initial, children }) => {
+  const commandsRef = useRef<Record<string, Record<string, (state: unknown, payload: unknown) => unknown>>>({});
   const [state, dispatch] = useReducer(
     reducer,
     undefined,
@@ -127,7 +141,7 @@ export const KernelProvider: React.FC<KernelProviderProps> = ({ initial, childre
         const raw = sessionStorage.getItem(STORAGE_KEY);
         if (raw) return revive(JSON.parse(raw));
       } catch {}
-      return initial;
+      return { ...initial, entities: initial.entities ?? {} };
     }
   );
 
@@ -141,7 +155,27 @@ export const KernelProvider: React.FC<KernelProviderProps> = ({ initial, childre
     } catch {}
   }, [state]);
 
-  const api = useMemo<KernelAPI>(() => ({ data: state, dispatch }), [state]);
+  const registerEntity = (entity: string, initialValue: unknown, commands: Record<string, (state: unknown, payload: unknown) => unknown>) => {
+    if (!commandsRef.current[entity]) {
+      commandsRef.current[entity] = { ...commands };
+    } else {
+      commandsRef.current[entity] = { ...commandsRef.current[entity], ...commands };
+    }
+    if (!(entity in state.entities)) {
+      dispatch({ type: "entity.set", entity, next: initialValue });
+    }
+  };
+
+  const execEntity = (entity: string, command: string, payload: unknown) => {
+    const reg = commandsRef.current[entity];
+    const fn = reg ? reg[command] : undefined;
+    if (!fn) return;
+    const current = state.entities[entity];
+    const next = fn(current, payload);
+    dispatch({ type: "entity.set", entity, next });
+  };
+
+  const api = useMemo<KernelAPI>(() => ({ data: state, dispatch, registerEntity, execEntity }), [state]);
   return <KernelCtx.Provider value={api}>{children}</KernelCtx.Provider>;
 };
 

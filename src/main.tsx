@@ -27,6 +27,7 @@ const initial: KernelData = {
   ],
   profileImage: null,
   todos: [{ id: "t1", text: "Say hi 👋", done: false }],
+  entities: {}
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

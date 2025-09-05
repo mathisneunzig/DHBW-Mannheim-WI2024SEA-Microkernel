@@ -4,9 +4,10 @@ import { HelloWorldPluginPage } from "./Page";
 pluginManager.register({
   id: "helloworld",
   route: "/helloworld",
-  component: HelloWorldPluginPage,
+  component: HelloWorldPluginPage,                 
   tile: "Hello World! 🚀",
-  color1: "red", 
+  color1: "red",
   color2: "yellow",
-  spin: 135
+  spin: 135,
+  permissions: ["users.read"] 
 });

@@ -97,6 +97,12 @@ pluginManager.register({
 
 ---
 
+Dependencies installieren: `npm install`
+
+App starten: `npm run dev`
+
+---
+
 ## Tipps
 
 - Achte darauf, dass du die Aufgabe **alleine** bearbeitest.  

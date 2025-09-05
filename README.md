@@ -1,5 +1,8 @@
 # Microkernel Plugin Aufgabe
 
+## Voraussetzungen
+node und npm müssen installiert sein!
+
 ## Ziel der Aufgabe
 Du entwickelst ein eigenes **Provider-Plugin** und ein **Consumer-Plugin** für das bestehende Microkernel-System.  
 Die Aufgabe wird **in Einzelarbeit** bearbeitet und ist mit **maximal 5 Punkten** bewertet.

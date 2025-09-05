@@ -4,6 +4,10 @@
 Du entwickelst ein eigenes **Provider-Plugin** und ein **Consumer-Plugin** für das bestehende Microkernel-System.  
 Die Aufgabe wird **in Einzelarbeit** bearbeitet und ist mit **maximal 5 Punkten** bewertet.
 
+## Abgabe
+Die Abgabe erfolgt bis zum 18.09.2025 um 20:00 als Pull-Request an diesem GitHub-Repository
+
+## Anforderungen
 Deine Plugins sollen:
 1. Sich korrekt beim `pluginManager` registrieren.  
 2. **Mindestens eine Funktion** implementieren, die Daten **liest** und **verändert**.  
@@ -14,6 +18,12 @@ Das Provider-Plugin soll:
    
 Das Consumer-Plugin soll:
 1. Die neue Permission und Datenstruktur **nutzen**.
+
+## Regeln
+1. Pünktlich abgeben!
+2. Matrikelnummer angeben!
+3. Code selber schreiben: Kein Einsatz von AI-gesteuerten Tools!
+4. Nicht bei anderen "abgucken"!
 
 ---
 

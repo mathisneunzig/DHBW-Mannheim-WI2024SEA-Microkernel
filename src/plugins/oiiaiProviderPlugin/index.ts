@@ -1,22 +1,22 @@
 import { pluginManager } from "../../app/pluginManager";
 import { LinkEntity } from "./types";
 pluginManager.register({
-  id: "koenigseggProvider",
-  route: "/koenigseggProvider",
+  id: "oiiaiProvider",
+  route: "/oiiaiProvider",
   component: () => null,
-  tile: "Koenigsegg Provider",
+  tile: "Oiiai Provider",
   color1: "#444",
   color2: "#777",
   spin: 15,
-  permissions: ["koenigseggLink.read", "koenigseggLink.write"],
+  permissions: ["oiiaiLink.read", "oiiaiLink.write"],
   provides: [
     {
-      entity: "koenigseggLink",
+      entity: "oiiaiLink",
       initial: [
         {
           id: "yt1",
-          title: "BRUMM BRUUUUUUUUMM",
-          url: "https://www.youtube.com/watch?v=cO8a07sbBAc",
+          title: "OIIAI O-OIIAI",
+          url: "https://www.youtube.com/watch?v=IxX_QHay02M&list=RDIxX_QHay02M&start_radio=1&t=32s",
         },
       ] as LinkEntity[],
       commands: {

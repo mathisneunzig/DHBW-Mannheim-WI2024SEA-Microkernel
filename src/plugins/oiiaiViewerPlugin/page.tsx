@@ -1,20 +1,16 @@
 import React, { useState } from "react";
 import type { PluginCtx } from "../../app/pluginRuntime";
 import tommy from "./img/tommy.png";
-export const KoenigseggViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
+export const OiiaiViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
   const links =
-    (ctx.read.entity("koenigseggLink") as {
+    (ctx.read.entity("oiiaiLink") as {
       id: string;
       title: string;
       url: string;
     }[]) ?? [];
   const link = links[0];
   const [url, setUrl] = useState(link?.url ?? "");
-  if (!link) {
-    return (
-      <div style={{ padding: 16 }}>ERROR: Kein Koenigsegg-Link verfügbar.</div>
-    );
-  }
+  
   return (
     <div style={{ padding: 16 }}>
       {" "}
@@ -40,13 +36,13 @@ export const KoenigseggViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
           onClick={() => {
             const v = url.trim();
             if (v) {
-              ctx.write.exec("koenigseggLink", "update", {
+              ctx.write.exec("oiiaiLink", "update", {
                 id: link.id,
                 url: v,
               });
             }
           }}
-          disabled={!ctx.can("koenigseggLink.write")}
+          disabled={!ctx.can("oiiaiLink.write")}
         >
           {" "}
           Speichern{" "}
@@ -56,7 +52,7 @@ export const KoenigseggViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
         {" "}
         <button
           onClick={() => window.open(link.url, "_blank")}
-          disabled={!ctx.can("koenigseggLink.read")}
+          disabled={!ctx.can("oiiaiLink.read")}
         >
           {" "}
           KATZE KATZE KATZE{" "}

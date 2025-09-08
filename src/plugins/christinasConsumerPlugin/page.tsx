@@ -9,8 +9,8 @@ export const christinasPlugin: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
   const [error, setError] = useState("");
   return (
     
-    <div style={{ background: "#FFF7F3", minHeight: "100vh", padding: 0, margin: 0 }}>
-      <div style={{ maxWidth: 500, margin: "32px auto", background: "#FAD0C4", borderRadius: 24, boxShadow: "0 4px 24px #C599B633", padding: 32 }}>
+    <div style={{ background: "#FFF7F3", padding: 0, margin: 0, textAlign: "center" }}>
+      <div style={{  margin: "32px auto", background: "#FAD0C4", borderRadius: 24,  padding: 32 }}>
         <h3 style={{ color: "#C599B6", textAlign: "center", marginBottom: 24 }}>Willkommen auf der Seite :3</h3>
         <img
           src={dackel}
@@ -26,19 +26,20 @@ export const christinasPlugin: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
           }}
         />
         <div style={{ color: "#6D466B", fontWeight: 500, marginBottom: 12 }}>Welche Emotion beschreibt dich am besten:</div>
-        <ul style={{ listStyle: "none", padding: 0, marginBottom: 24 }}>
+        <ul style={{ padding: 0, marginBottom: 24, alignItems: "center", justifyContent: "center", display: "flex", flexDirection: "column" }}>
+
           {emotions.map(e => (
             <li key={e.id} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
               <button 
                 onClick={() => window.open(e.url, "_blank")}
                 disabled={!ctx.can("emotionsLinks.read")}
-                style={{ background: "#C599B6", color: "#FFF7F3", border: "none", borderRadius: 8, padding: "6px 16px", fontWeight: 500, cursor: "pointer" }}>
+                style={{ background: "#C599B6", color: "#FFF7F3", borderRadius: 8, padding: "6px 16px", fontWeight: 500,  border: "none" }}>
                 {e.emotion} 
               </button>
               <button 
                 onClick={() => { ctx.write.exec("emotionsLinks","remove",{ id: e.id }) }}
                 disabled={!ctx.can("emotionsLinks.write")}
-                style={{ background: "#E6B2BA", color: "#6D466B", border: "none", borderRadius: 8, padding: "6px 12px", fontWeight: 500, cursor: "pointer" }}>
+                style={{ background: "#E6B2BA", color: "#6D466B", border: "none", borderRadius: 8, padding: "6px 12px", fontWeight: 500 }}>
                 Löschen
               </button>
             </li>
@@ -46,9 +47,11 @@ export const christinasPlugin: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
         </ul>
         <div style={{ color: "#6D466B", fontWeight: 500, marginBottom: 8 }}>Füge eine neue Emotion hinzu:</div>
         <div style={{ marginBottom: 20 }}>
-          <input value={emotion} onChange={e => setEmotion(e.target.value)} placeholder="Name Neue Emotion" style={{ padding: 8, borderRadius: 8, border: "1px solid #E6B2BA", marginRight: 8, width: "calc(50% - 12px)" }} />
-          <input value={url} onChange={e => setUrl(e.target.value)} placeholder="Url eines passenden Bildes" style={{ padding: 8, borderRadius: 8, border: "1px solid #E6B2BA", width: "calc(50% - 12px)" }} />
+          <input value={emotion} onChange={e => setEmotion(e.target.value)} placeholder="Name Neue Emotion" style={{ padding: 8, borderRadius: 8, border: "1px solid #E6B2BA",  width: "25%" }} />
+          <br></br>
+          <input value={url} onChange={e => setUrl(e.target.value)} placeholder="Url eines passenden Bildes" style={{ padding: 8, borderRadius: 8, border: "1px solid #E6B2BA", width: "25%" }} />
           {error && <div style={{ color: "#C599B6", marginTop: 8, marginBottom: 8 }}>{error}</div>}
+          <br></br>
           <button onClick={() => { 
             const e = emotion.trim(); 
             const u = url.trim();
@@ -63,7 +66,7 @@ export const christinasPlugin: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
               setError("");
             } 
           }} disabled={!ctx.can("emotionsLinks.write")}
-            style={{ background: "#C599B6", color: "#FFF7F3", border: "none", borderRadius: 8, padding: "8px 24px", fontWeight: 500, marginTop: 8, cursor: "pointer" }}>
+            style={{ background: "#C599B6", color: "#FFF7F3", borderRadius: 8, padding: "8px 24px", fontWeight: 500, marginTop: 8,  border: "none" }}>
             Hinzufügen
           </button>
         </div>

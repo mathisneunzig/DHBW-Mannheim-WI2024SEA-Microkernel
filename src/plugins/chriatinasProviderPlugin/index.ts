@@ -55,6 +55,11 @@ pluginManager.register({
           id: "emotion8",
           emotion: "nonchalant",
           url: "https://de.pinterest.com/pin/917327017858842285/",
+        }, 
+        {
+          id: "emotion9",
+          emotion: "hungry",
+          url: "https://de.pinterest.com/pin/69172544272008039/"
         },
 
         

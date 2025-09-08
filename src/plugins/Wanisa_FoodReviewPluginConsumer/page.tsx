@@ -8,7 +8,7 @@ export const Food: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
   return (
     <div style={{ padding: 10}}>
       <h3>FOOD REVIEWS</h3>
-      <h4>Füge dir einfach selbsterstellte Food Reviews hinzu, um nie wieder die besten Spots zu vergessen! </h4>
+      <h4>Füge dir einfach selbsterstellte Food Reviews hinzu, um die besten Spots NIE wieder zu vergessen, oder um sie mit deinen Freunden zu teilen! </h4>
       <h5>Folgendes Format: <br></br> Food Spot Name 🍔 | Bewertung 1-5 💯| Kleine Beschreibung 🖹</h5>
     
       <div style={{ marginBottom: 8}}>
@@ -17,12 +17,19 @@ export const Food: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
           onClick={() => {
             const v = text.trim();
             if (v) {
-              window.open("https://www.youtube.com/watch?v=DW5so6wyXIY");
               ctx.write.exec("reviews","add",{ text: v});
               setText("");
-            }}}
+            }
+            }}
         disabled={!ctx.can("reviews.write")}>
-        Fang an
+        Review hinzufügen   
+        </button>
+        <button 
+          onClick={() => {
+              window.open("https://www.youtube.com/watch?v=DW5so6wyXIY");
+          }}
+          >
+          KLICK MICH (wenn du dich traust ⚽⭐)
         </button>
       </div>
       <ul>
@@ -37,7 +44,8 @@ export const Food: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
       </ul>
       <br></br>
       <br></br> 
-      <br></br> {/*Kleiner Zeilenabstand zwischen Katze und Review*/}
+      <br></br> 
+      {/*Komischer Abstand*/}
     <div style ={{ width: 220, marginLeft: 3}}>
       <img src = "https://haustiereleben.net/wp-content/images/welches-fleisch-durfen-katzen-essen-atmq0o28.jpg" alt="KatzeIsstBVBaufWeilBayernBesserIst" style={{ width: "100%", borderRadius: 10 }}/>
     </div>

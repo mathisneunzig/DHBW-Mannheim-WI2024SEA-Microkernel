@@ -1,5 +1,5 @@
-import { pluginManager } from "../../app/pluginManager";
-import type { Recipe, Ingredient } from "./types";
+import { pluginManager } from "../../../app/pluginManager.ts";
+import type { Recipe, Ingredient } from "./types.ts";
 
 pluginManager.register({
     id: "recipesProvider",

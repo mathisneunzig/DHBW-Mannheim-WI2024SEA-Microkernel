@@ -4,7 +4,7 @@ import type { Recipe, Ingredient } from "./types";
 pluginManager.register({
     id: "recipesProvider",
     route: "/recipesProvider",
-    component: () => null, // headless
+    component: () => null,
     tile: "Recipes Provider",
     color1: "#6a5acd",
     color2: "#b19cd9",

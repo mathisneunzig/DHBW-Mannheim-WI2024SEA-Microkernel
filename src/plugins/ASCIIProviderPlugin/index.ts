@@ -8,6 +8,39 @@ pluginManager.register({
   color1: "#7e1b1bff",
   color2: "#111",
   spin: 15,
-  permissions: [],
-  provides: []
+  permissions: ["ASCIIs.read", "ASCIIs.write"],
+  provides: [
+    {
+      entity: "ASCIIs",
+      initial: [
+        {
+          id: "f1",
+          frame: `
+  (•_•)
+ <)   )╯
+  /   \\`,
+        },
+        {
+          id: "f2",
+          frame: `
+  (•_•)
+ \\(   )>
+  /   \\`,
+        },
+        {
+          id: "f3",
+          frame: `
+  (•_•)
+ <)   )>
+  /   \\`,
+        },
+      ],
+      commands: {
+        setSpeed: (speed: any) => {
+          const newSpeed =
+            typeof speed === "number" && !isNaN(speed) ? speed : 0;
+        },
+      },
+    },
+  ],
 });

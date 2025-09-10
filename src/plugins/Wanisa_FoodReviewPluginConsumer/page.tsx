@@ -13,31 +13,33 @@ export const Food: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
     
       <div style={{ marginBottom: 8}}>
         <input value={text} onChange={e => setText(e.target.value)} placeholder="FANG AN!"/>
-        <button 
-          onClick={() => {
-            const v = text.trim();
-            if (v) {
+        <button onClick={() => {const v = text.trim(); 
+        if (v) {
               ctx.write.exec("reviews","add",{ text: v});
               setText("");
-            }
             }}
+          }
         disabled={!ctx.can("reviews.write")}>
         Review hinzufügen   
         </button>
-        <button 
-          onClick={() => {
+        <button onClick={() => {
               window.open("https://www.youtube.com/watch?v=DW5so6wyXIY");
           }}
           >
-          KLICK MICH (wenn du dich traust ⚽⭐)
+        ⚽⭐
         </button>
+        <button onClick={() =>
+              ctx.write.exec("reviews","clear", {})}
+              disabled={!ctx.can("reviews.write")}>
+            ALLE Reviews löschen
+           </button>
       </div>
       <ul>
         {reviews.map(n => (
           <li key={n.id} style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <span>{n.text}</span>
             <button onClick={() => ctx.write.exec("reviews","remove",{ id: n.id })} disabled={!ctx.can("reviews.write")}>
-              Löschennnn
+              WEG DAMIT
             </button>
           </li>
         ))}
@@ -45,9 +47,8 @@ export const Food: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
       <br></br>
       <br></br> 
       <br></br> 
-      {/*Komischer Abstand*/}
     <div style ={{ width: 220, marginLeft: 3}}>
-      <img src = "https://haustiereleben.net/wp-content/images/welches-fleisch-durfen-katzen-essen-atmq0o28.jpg" alt="KatzeIsstBVBaufWeilBayernBesserIst" style={{ width: "100%", borderRadius: 10 }}/>
+      <img src = "https://haustiereleben.net/wp-content/images/welches-fleisch-durfen-katzen-essen-atmq0o28.jpg" style={{ width: "100%", borderRadius: 10 }}/>
     </div>
     </div>
   );

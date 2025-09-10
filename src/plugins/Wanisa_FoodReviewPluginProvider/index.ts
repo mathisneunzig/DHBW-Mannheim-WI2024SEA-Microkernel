@@ -9,7 +9,7 @@ pluginManager.register({
   color1: "#444",
   color2: "#777",
   spin: 15,
-  permissions: ["reviews.read","reviews.write"],
+  permissions: ["reviews.read","reviews.write",],
   provides: [
     {
       entity: "reviews",
@@ -25,7 +25,8 @@ pluginManager.register({
           const list = Array.isArray(state) ? state as { id: string; text: string }[] : [];
           const id = String(payload?.id ?? "");
           return list.filter(n => n.id !== id);
-        }
+        },
+        clear: (state, payload) => []
       }
     }
   ]

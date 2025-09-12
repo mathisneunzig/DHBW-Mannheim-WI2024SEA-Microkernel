@@ -36,9 +36,17 @@ pluginManager.register({
         },
       ],
       commands: {
-        setSpeed: (speed: any) => {
-          const newSpeed =
-            typeof speed === "number" && !isNaN(speed) ? speed : 0;
+        addFrame: (state , payload: any) => {
+          const list = Array.isArray(state) ? (state as { id: string; frame: string }[]) : [];
+          const frame = String(payload?.frame ?? "");
+          if (!frame) return list;
+          const id = crypto.randomUUID();
+          return [...list, { id, frame }];
+        },
+        removeFrame: (state , payload: any) => {
+          const list = Array.isArray(state) ? state as { id: string; frame: string }[] : [];
+          const id = String(payload?.id ?? "");
+          return list.filter(n => n.id !== id);
         },
       },
     },

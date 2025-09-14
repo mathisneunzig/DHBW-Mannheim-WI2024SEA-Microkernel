@@ -5,9 +5,9 @@ pluginManager.register({
     id: "videoViewer",
     route: "/videoViewer",
     component: VideoViewerPage,
-    tile: "Video Viewer",
+    tile: "Cat Video Viewer",
     color1: "#cfceceff",
     color2: "#007a04ff",
     spin: 90,
-    permissions: ["videos.read", "videos.write"],
+    permissions: ["videos.read", "videos.write", "users.read"],
 });

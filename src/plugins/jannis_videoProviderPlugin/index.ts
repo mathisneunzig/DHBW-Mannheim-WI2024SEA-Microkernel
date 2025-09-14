@@ -13,7 +13,10 @@ pluginManager.register({
     provides: [
         {
             entity: "videos",
-            initial: [] as Video[],
+            initial: [
+                {title: "Meoooooow", likes: 163, additional_information: "This cat meows :)", url: "https://www.youtube.com/shorts/8jM4XT-5CUA?feature=share"},
+                {title: "Meow Song", likes: 42, additional_information: "Cat is singing a song :D", url: "https://www.youtube.com/watch?v=AtPrjYp75uA&list=RDAtPrjYp75uA&start_radio=1"}
+            ] as Video[],
             commands: {
                 add: (state, payload: any) => {
                     console.log("Add video");
@@ -22,7 +25,17 @@ pluginManager.register({
                     console.log("Remove video");
                 },
                 like: (state, payload: any) => {
-                    console.log("Liking video");
+                    const videoList = Array.isArray(state) ? state as Video[] : [];
+                    const urlToLike = String(payload.url);
+                    
+                    //Like video
+                    videoList.map(video => {
+                        if (video.url == urlToLike) {
+                            video.likes++;
+                        }
+                    });
+
+                    return videoList;
                 },
             },
         },

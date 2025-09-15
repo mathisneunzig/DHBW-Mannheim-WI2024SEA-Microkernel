@@ -19,7 +19,19 @@ pluginManager.register({
             ] as Video[],
             commands: {
                 add: (state, payload: any) => {
-                    console.log("Add video");
+                    const videoList = Array.isArray(state) ? state as Video[] : [];
+                    const newVideo = {
+                        title: payload?.title ?? "",
+                        url: payload?.link ?? "",
+                        likes: 0,
+                        additional_information: payload?.additionalInformation ?? ""
+                    };
+
+                    if (newVideo.title == "" || newVideo.url == "" || newVideo.additional_information == "") {
+                        return videoList;
+                    } else {
+                        return [...videoList, newVideo];
+                    }
                 },
                 remove: (state, payload: any) => {
                     console.log("Remove video");

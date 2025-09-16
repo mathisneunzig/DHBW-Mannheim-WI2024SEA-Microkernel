@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import type { PluginCtx } from "../../app/pluginRuntime";
-import type { ShoppingItem } from "../Ajun_ShopListProviderPlugin/types";
+import type { WishlistItem } from "../Ajun_WishlistProviderPlugin/types";
 
-export const ShoppingViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
-  const items = (ctx.read.entity("shoppingList") as ShoppingItem[]) ?? [];
+export const WishlistViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
+  const items = (ctx.read.entity("wishlist") as WishlistItem[]) ?? [];
   const [item, setItem] = useState("");
   const [qty, setQty] = useState(1);
   const totalItems = items.reduce((sum, x) => sum + x.qty, 0);
 
   return (
     <div style={{ padding: 24, maxWidth: 500, margin: "0 auto", fontFamily: "sans-serif" }}>
-      <h2>Artikel eingeben:</h2>
+      <h2>Wunsch hinzufügen:</h2>
 
       <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
         <input
           value={item}
           onChange={(e) => setItem(e.target.value)}
-          placeholder="Artikel"
+          placeholder="Wunsch"
           style={{ flex: 1, padding: 6 }}
         />
         <input
@@ -28,7 +28,7 @@ export const ShoppingViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
         />
         <button onClick={() => { const v = item.trim();
             if (v) {
-              ctx.write.exec("shoppingList", "add", { item: v, qty });
+              ctx.write.exec("wishlist", "add", { item: v, qty });
               setItem(""); setQty(1);
             }
           }}
@@ -38,18 +38,18 @@ export const ShoppingViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
       </div>
 
       <br/>
-      <h2>🛒 Einkaufsliste:</h2>
+      <h2>🌟 Wunschliste:</h2>
 
       <div style={{ padding: 8 }}>
-        {items.length === 0 && <div style={{ textAlign: "center", color: "grey" }}>Keine Artikel</div>}
+        {items.length === 0 && <div style={{ textAlign: "center", color: "grey" }}>Keine Wünsche</div>}
 
         <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
           {items.map((x) => (
             <li key={x.id} style={{ display: "flex", justifyContent: "space-between", padding: "4px" }}>
               <span>{x.item} ({x.qty})</span>
-              <button onClick={() => ctx.write.exec("shoppingList", "remove", { id: x.id })}
+              <button onClick={() => ctx.write.exec("wishlist", "remove", { id: x.id })}
                 style={{ backgroundColor: "red", color: "white", cursor: "pointer" }}>
-                Löschen
+                Entfernen
               </button>
             </li>
           ))}

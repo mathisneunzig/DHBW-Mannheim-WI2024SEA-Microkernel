@@ -5,9 +5,9 @@ pluginManager.register({
   id: "wishlistViewer",
   route: "/wishlist",
   component: WishlistViewerPage,
-  tile: "Wishlist",
-  color1: "#33aa33",
-  color2: "#88dd88",
+  tile: "Wishlist 🌟",
+  color1: "#196ba1ff",
+  color2: "#7b58c153",
   spin: 150,
   permissions: ["wishlist.read", "wishlist.write"],
   dependsOn: [

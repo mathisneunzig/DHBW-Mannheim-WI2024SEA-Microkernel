@@ -1,10 +1,10 @@
 import { pluginManager } from "../../app/pluginManager";
 
 pluginManager.register({
-  id: "notesProvider",
-  route: "/notesProvider",
+  id: "ASCIIProvider",
+  route: "/ASCIIProvider",
   component: () => null,
-  tile: "Notes Provider",
+  tile: "ASCIIProvider",
   color1: "#7e1b1bff",
   color2: "#111",
   spin: 15,

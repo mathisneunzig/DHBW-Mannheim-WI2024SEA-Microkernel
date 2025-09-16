@@ -13,19 +13,30 @@ export const BucketlistViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
   const [text, setText] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
+  const [editingId, setEditingId] = useState<string | null>(null);
 
-  const handleAdd = () => {
+  const handleSubmit = () => {
     const trimmedText = text.trim();
     const trimmedImage = imageUrl.trim();
     const trimmedDescription = description.trim();
 
     if (!trimmedText) return;
 
-    ctx.write.exec("list", "add", {
-      text: trimmedText,
-      imageUrl: trimmedImage || undefined,
-      description: trimmedDescription || undefined,
-    });
+    if (editingId) {
+      ctx.write.exec("list", "edit", {
+        id: editingId,
+        text: trimmedText,
+        imageUrl: trimmedImage || undefined,
+        description: trimmedDescription || undefined,
+      });
+      setEditingId(null);
+    } else {
+      ctx.write.exec("list", "add", {
+        text: trimmedText,
+        imageUrl: trimmedImage || undefined,
+        description: trimmedDescription || undefined,
+      });
+    }
 
     setText("");
     setImageUrl("");
@@ -45,7 +56,6 @@ export const BucketlistViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
         <h3>Bucket-List</h3>
       </div>
 
-      {/* Eingabe Text */}
       <div style={{ marginBottom: 12 }}>
         <input
           type="text"
@@ -56,7 +66,6 @@ export const BucketlistViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
         />
       </div>
 
-      {/* Eingabe Bild-URL */}
       <div style={{ marginBottom: 12 }}>
         <input
           type="url"
@@ -66,7 +75,6 @@ export const BucketlistViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
           style={{ width: 300, marginRight: 8 }}
         />
       </div>
-      {/* Eingabe Beschreibung */}
       <div style={{ marginBottom: 12 }}>
         <input
           type="text"
@@ -77,13 +85,25 @@ export const BucketlistViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
         />
       </div>
       <button
-        onClick={handleAdd}
+        onClick={handleSubmit}
         disabled={!ctx.can("list.write") || !text.trim()}
       >
-        Hinzufügen
+        {editingId ? "Speichern" : "Hinzufügen"}
       </button>
+      {editingId && (
+        <button
+          onClick={() => {
+            setEditingId(null);
+            setText("");
+            setImageUrl("");
+            setDescription("");
+          }}
+          style={{ marginLeft: 8 }}
+        >
+          Abbrechen
+        </button>
+      )}
 
-      {/* Liste der Einträge */}
       <ul
         style={{
           listStyle: "none",
@@ -114,9 +134,7 @@ export const BucketlistViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
               flexDirection: "column",
             }}
           >
-            {/*  Überschrift - Formatierung */}
             <p style={{ margin: 10, fontWeight: "bold" }}>{n.text}</p>
-            {/*  Bild - Formatierung */}
             {n.imageUrl && (
               <img
                 src={n.imageUrl}
@@ -132,7 +150,6 @@ export const BucketlistViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
                 }
               />
             )}
-            {/*  Beschreibung - Formatierung */}
             {n.description && (
               <p
                 style={{
@@ -145,7 +162,6 @@ export const BucketlistViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
                 {n.description}
               </p>
             )}
-            {/*  Button - Formatierung */}
             <div
               style={{
                 marginTop: "auto",
@@ -158,6 +174,19 @@ export const BucketlistViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
               >
                 Löschen
               </button>
+              {ctx.can("list.edit") && (
+                <button
+                  onClick={() => {
+                    setEditingId(n.id);
+                    setText(n.text);
+                    setImageUrl(n.imageUrl ?? "");
+                    setDescription(n.description ?? "");
+                  }}
+                  style={{ marginLeft: 8 }}
+                >
+                  Bearbeiten
+                </button>
+              )}
             </div>
           </li>
         ))}

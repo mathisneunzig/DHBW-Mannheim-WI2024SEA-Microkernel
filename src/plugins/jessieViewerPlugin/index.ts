@@ -9,6 +9,8 @@ pluginManager.register({
   color1: "#CDAF95",
   color2: "#ba9a7eff",
   spin: 45,
-  permissions: ["list.read", "list.write"],
-  dependsOn: [{ entity: "list", permissions: ["list.read", "list.write"] }],
+  permissions: ["list.read", "list.write", "list.edit"],
+  dependsOn: [
+    { entity: "list", permissions: ["list.read", "list.write", "list.edit"] },
+  ],
 });

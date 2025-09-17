@@ -24,36 +24,41 @@ export const VideoViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
             <p>Hello {users[0]?.firstName ?? "NoName"}, have a look at the cat videos!</p>
             <button onClick={() => setShowAddCatVideo(true)} disabled={!ctx.can("videos.write")}>Add cat video</button>
             <AddCatVideo show={showAddCatVideo} close={() => setShowAddCatVideo(false)}>
-                <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Title"/>
-                <input type="text" value={link} onChange={e => setLink(e.target.value)} placeholder="Youtube link"/>
-                <input type="text" value={additionalInformation} onChange={e => setAdditionalInformation(e.target.value)} placeholder="Description"/>
-                <button onClick={() => {
-                    //Add video
-                    const t = title.trim();
-                    const l = link.trim();
-                    const aI = additionalInformation.trim();
+                <div style={{display: "grid"}}>
+                    <label style={{gridColumn: 1, gridRow: 1, marginBottom: "1rem", marginTop: "1rem"}}>Title:</label>
+                    <input style={{gridColumn: 2, gridRow: 1, marginBottom: "1rem", marginTop: "1rem"}} type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Title"/>
+                    <label style={{gridColumn: 1, gridRow: 2, marginBottom: "1rem"}}>Link:</label>
+                    <input style={{gridColumn: 2, gridRow: 2, marginBottom: "1rem"}} type="text" value={link} onChange={e => setLink(e.target.value)} placeholder="Youtube link"/>
+                    <label style={{gridColumn: 1, gridRow: 3, marginBottom: "1rem", marginRight: "0.5rem"}}>Description:</label>
+                    <input style={{gridColumn: 2, gridRow: 3, marginBottom: "1rem"}} type="text" value={additionalInformation} onChange={e => setAdditionalInformation(e.target.value)} placeholder="Description"/>
+                    <button style={{gridColumn: 2, gridRow: 4, marginBottom: "1rem"}} onClick={() => {
+                        //Add video
+                        const t = title.trim();
+                        const l = link.trim();
+                        const aI = additionalInformation.trim();
 
-                    if (t && l && aI) {
-                        ctx.write.exec("videos", "add", {title: t, link: l, additionalInformation: aI});
-                    }
+                        if (t && l && aI) {
+                            ctx.write.exec("videos", "add", {title: t, link: l, additionalInformation: aI});
+                        }
 
-                    //Close popup
-                    setShowAddCatVideo(false);
-                }}>Submit</button>
+                        //Close popup
+                        setShowAddCatVideo(false);
+                    }}>Submit</button>
+                </div>
             </AddCatVideo>
             <hr />
             <div style={{display: "grid", gridTemplateColumns: "repeat(5, 1fr)"}}>
                 {videos.map(video => (
-                    <div style={{backgroundColor: "#b5bbb5ff", marginRight: "1rem", paddingLeft: "0.5rem", paddingBottom: "0.25rem", borderRadius: "5px"}}>
+                    <div style={{backgroundColor: "#83dbf6", marginRight: "1rem", paddingLeft: "0.5rem", paddingBottom: "1rem", borderRadius: "0.25rem"}}>
                         <p style={{fontSize: 22, fontWeight: "bold"}}>{video.title}</p>
                         <div style={{display: "flex"}}>
-                            <p style={{fontWeight: 400}}><img style={{verticalAlign: "sub"}} src="/thumb_up_mui.svg" alt="Thumb up" /> {video.likes}</p>
-                            <button style={{marginLeft: "3rem", border: "None", backgroundColor: "rgba(185, 255, 157, 1)", textAlign: "center", borderRadius: "3px", padding: "1rem"}} onClick={() => likeVideo(video)}>
-                                Like this video
+                            <button style={{marginLeft: "0.5rem", border: "None", backgroundColor: "#18b2df", textAlign: "center", borderRadius: "1rem", padding: "1rem"}} onClick={() => likeVideo(video)}>
+                                <img style={{verticalAlign: "sub"}} src="/thumb_up_mui.svg" alt="Thumb up" /> {video.likes}
+                            </button>
+                            <button style={{marginLeft: "2rem", backgroundColor: "#18b2df", width: "5rem", borderRadius: "1rem", borderStyle: "none"}} onClick={() => window.open(video.url, "_blank")?.focus()}>
+                                <img  style={{padding: "0.5rem"}} src="/smart_display_mui.svg" alt="Play video" />
                             </button>
                         </div>
-                        <br />
-                        <a href={video.url} target="_blank">Go to cat :)</a>
                     </div>
                 ))}
             </div>

@@ -52,13 +52,14 @@ export const CoffeePage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
           <div className="input-group mb-3 w-50 mx-auto">
             <input
               type="text"
-              className="form-control bg-dark text-light"
+              className="form-control bg-dark text-light customph"
               aria-label="Coffee Drink"
               aria-describedby="button-addon2"
               onChange={(e) => {
                 setInput(e.target.value);
                 setSearched(false);
               }}
+              placeholder="Enter your drink..."
             />
             <button
               onClick={handleSearch}
@@ -75,7 +76,7 @@ export const CoffeePage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
               </p>
             ))}
           </ul>
-          {searched && filtered.length === 0 && <p>Drink not found... <br></br> You can add your Drink by clicking "Add"</p>}
+          {searched && filtered.length === 0 && <div className="alert alert-warning" role="alert">Nothing found... <br></br> Add your favorite drink by clicking 'Add'</div>}
         </div>
       )}
 

@@ -1,0 +1,4 @@
+.customph::placeholder {
+  color: white !important;
+  opacity: 0.5;
+}

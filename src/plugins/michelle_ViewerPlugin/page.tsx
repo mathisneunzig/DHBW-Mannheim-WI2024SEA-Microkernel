@@ -84,7 +84,7 @@ export const Trivia: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
                 }
 
                 {!showAnswer && (
-                    <button onClick={() => setShowAnswer(true)} style={buttonStyle1}>See Answer</button>)}
+                    <button onClick={() => {setTriviaDone(false); setShowAnswer(true)}} style={buttonStyle1}>See Answer</button>)}
                 {showAnswer && (
                     <p style={AnswerField}>
                         {question.length > 0 ? question[currentIndex].answer : "No answer available."}
@@ -156,21 +156,6 @@ export const Trivia: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
                                     }}
                                 />
                             </div>
-
-                            {/* <h2 style={{ marginRight: "0" }}>Your Score</h2>
-                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1opx" }}>
-                                {countAnsCorrect >= (question.length - countAnsCorrect) ? (
-                                    <>
-                                        <p style={{ width: "60%" }}>Well done  {users[0]?.firstName ?? "World"}, you answered {countAnsCorrect} out of {question.length} questions correctly!</p>
-                                        <img src="https://portfoliocards.com/cdn/shop/files/NW506-gallery_blowup.jpg?v=1717062920" style={ImgStyle} />
-                                    </>
-                                ) : (
-                                    <>
-                                        <p style={{ width: "60%" }}>You answered {countAnsCorrect} out of {question.length} questions correctly. Maybe next time you will get better, good luck {users[0]?.firstName ?? "World"}!</p>
-                                        <img src="https://ih1.redbubble.net/image.4196315404.4674/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.jpg" style={ImgStyle} />
-                                    </>
-                                )}
-                            </div> */}
                         </div>
                     </>
                 )}

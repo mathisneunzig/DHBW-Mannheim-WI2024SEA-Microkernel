@@ -5,14 +5,14 @@ import { AddDrinkForm } from "./Components/AddDrinkForm";
 import { SearchDrinkForm } from "./Components/SearchDrinkForm";
 
 export const CoffeePlugin: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
-  const [openSearchBar, setOpenSearchBar] = useState(true);
+  const [openSearchBar, setOpenSearchBar] = useState("search");
 
   return (
     <div className="bg-dark text-light">
       <div className="d-flex justify-content-between p-3">
         <button
           onClick={() => {
-            setOpenSearchBar(true);
+            setOpenSearchBar("search");
           }}
           type="button"
           className="btn btn-outline-light"
@@ -21,7 +21,7 @@ export const CoffeePlugin: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
         </button>
         <button
           onClick={() => {
-            setOpenSearchBar(false);
+            setOpenSearchBar("add");
           }}
           type="button"
           className="btn btn-outline-light"
@@ -30,8 +30,9 @@ export const CoffeePlugin: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
         </button>
       </div>
 
-      {openSearchBar && <SearchDrinkForm ctx={ctx}></SearchDrinkForm>}
-      {!openSearchBar && <AddDrinkForm ctx={ctx} />}
+      {openSearchBar === "search" && <SearchDrinkForm ctx={ctx} onSearch={() => {setOpenSearchBar("result")}} ></SearchDrinkForm>}
+      {openSearchBar === "add" && <AddDrinkForm ctx={ctx} />}
+      {openSearchBar === "result" && <div>Gefickt</div>}
     </div>
   );
 };

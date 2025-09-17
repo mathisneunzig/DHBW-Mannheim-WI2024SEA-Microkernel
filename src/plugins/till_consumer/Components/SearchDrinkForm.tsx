@@ -3,7 +3,7 @@ import type { PluginCtx } from "../../../app/pluginRuntime";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Placeholder } from "react-bootstrap";
 
-export const SearchDrinkForm: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
+export const SearchDrinkForm: React.FC<{ ctx: PluginCtx; onSearch: ()=>void }> = ({ ctx, onSearch }) => {
   const current = ctx.read.entity("coffee") as { name: string; link: string }[];
   const [input, setInput] = useState("");
   const [filtered, setFiltered] = useState<{ name: string; link: string }[]>(
@@ -18,11 +18,14 @@ export const SearchDrinkForm: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
     setFiltered(result);
     setSearched(true);
     setInput("");
+    if (result.length > 0) {
+      onSearch();
+    }
   };
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center bg-dark text-light p-3 vh-100">
-      <h3>Tell us your favorite coffee, and we'll show you how to make it.</h3>
+      <h3>Tell me your favorite coffee, and i'll show you how to make it.</h3>
       <Placeholder></Placeholder>
       <div className="input-group mb-3 w-50 mx-auto">
         <input
@@ -44,9 +47,14 @@ export const SearchDrinkForm: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
       </div>
       <ul>
         {filtered.map((recipe, idx) => (
-          <p key={idx}>
-            <a href={recipe.link}>{recipe.name}</a>
-          </p>
+          <div className="card">
+            <div className="card-header">{recipe.name}</div>
+            <div className="card-body">
+              <a href={recipe.link} className="btn btn-primary">
+                Go to Recipe
+              </a>
+            </div>
+          </div>
         ))}
       </ul>
       {searched && filtered.length === 0 && (

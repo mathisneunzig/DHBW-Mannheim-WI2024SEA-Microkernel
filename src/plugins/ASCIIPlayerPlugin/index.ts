@@ -5,7 +5,7 @@ pluginManager.register({
   id: "ASCIIPlayer",
   route: "/ASCIIPlayer",
   component: ASCIIPlayerPage,
-  tile: "ASCII",
+  tile: "ASCII Player",
   color1: "#43cea2",
   color2: "#185a9d",
   spin: 135,

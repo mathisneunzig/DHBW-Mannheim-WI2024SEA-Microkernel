@@ -1,10 +1,10 @@
 import { pluginManager } from "../../app/pluginManager";
-import { CoffeePage } from "./CoffeePage";
+import { CoffeePlugin } from "./CoffeePlugin";
 
 pluginManager.register({
   id: "coffeeConsumer",
   route: "/coffee",
-  component: CoffeePage,
+  component: CoffeePlugin,
   tile: "Get your daily cup of Coffee",
   color1: "<Farbe 1>",
   color2: "<Farbe 2>",

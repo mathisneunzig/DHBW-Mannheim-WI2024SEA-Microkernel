@@ -9,6 +9,7 @@ export const VideoViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
 
     // States
     const [showAddCatVideo, setShowAddCatVideo] = useState(false);
+    const [addInfoText, setAddInfoText] = useState("");
     const [title, setTitle] = useState("");
     const [link, setLink] = useState("");
     const [additionalInformation, setAdditionalInformation] = useState("");
@@ -20,32 +21,42 @@ export const VideoViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
 
     return (
         <div>
-            <h1>Cat Video Viewer</h1>
-            <p>Hello {users[0]?.firstName ?? "NoName"}, have a look at the cat videos!</p>
-            <button onClick={() => setShowAddCatVideo(true)} disabled={!ctx.can("videos.write")}>Add cat video</button>
-            <AddCatVideo show={showAddCatVideo} close={() => setShowAddCatVideo(false)}>
-                <div style={{display: "grid"}}>
-                    <label style={{gridColumn: 1, gridRow: 1, marginBottom: "1rem", marginTop: "1rem"}}>Title:</label>
-                    <input style={{gridColumn: 2, gridRow: 1, marginBottom: "1rem", marginTop: "1rem"}} type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Title"/>
-                    <label style={{gridColumn: 1, gridRow: 2, marginBottom: "1rem"}}>Link:</label>
-                    <input style={{gridColumn: 2, gridRow: 2, marginBottom: "1rem"}} type="text" value={link} onChange={e => setLink(e.target.value)} placeholder="Youtube link"/>
-                    <label style={{gridColumn: 1, gridRow: 3, marginBottom: "1rem", marginRight: "0.5rem"}}>Description:</label>
-                    <input style={{gridColumn: 2, gridRow: 3, marginBottom: "1rem"}} type="text" value={additionalInformation} onChange={e => setAdditionalInformation(e.target.value)} placeholder="Description"/>
-                    <button style={{gridColumn: 2, gridRow: 4, marginBottom: "1rem"}} onClick={() => {
-                        //Add video
-                        const t = title.trim();
-                        const l = link.trim();
-                        const aI = additionalInformation.trim();
+            <div style={{backgroundColor: "#e1f4fd", paddingLeft: "1rem", paddingTop: "1rem", borderRadius: "0.5rem", paddingBottom: "1rem"}}>
+                <h1>Cat Video Viewer -  (^･o･^)</h1>
+                <p>Hello {users[0]?.firstName ?? "NoName"}, have a look at the cat videos!</p>
+                <button onClick={() => setShowAddCatVideo(true)} disabled={!ctx.can("videos.write")}>Add cat video</button>
+                <AddCatVideo show={showAddCatVideo} close={() => setShowAddCatVideo(false)}>
+                    <div style={{display: "grid"}}>
+                        <label style={{gridColumn: 1, gridRow: 1, marginBottom: "1rem", marginTop: "1rem"}}>Title:</label>
+                        <input style={{gridColumn: 2, gridRow: 1, marginBottom: "1rem", marginTop: "1rem"}} type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Title"/>
+                        <label style={{gridColumn: 1, gridRow: 2, marginBottom: "1rem"}}>Link:</label>
+                        <input style={{gridColumn: 2, gridRow: 2, marginBottom: "1rem"}} type="text" value={link} onChange={e => setLink(e.target.value)} pattern="https://www\.youtube\.com/watch\?v=[A-Za-z0-9]+" placeholder="Youtube link"/>
+                        <label style={{gridColumn: 1, gridRow: 3, marginBottom: "1rem", marginRight: "0.5rem"}}>Description:</label>
+                        <input style={{gridColumn: 2, gridRow: 3, marginBottom: "1rem"}} type="text" value={additionalInformation} onChange={e => setAdditionalInformation(e.target.value)} placeholder="Description"/>
+                        <p style={{gridColumn: 2, gridRow: 4}}>{addInfoText}</p>
+                        <button style={{gridColumn: 2, gridRow: 5, marginBottom: "1rem"}} onClick={() => {
+                            let validLink = /https:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9]+/.test(link);
+                            if (!validLink) {
+                                setAddInfoText("The link provided is not a link to a youtube video!");
+                                return;
+                            }
 
-                        if (t && l && aI) {
-                            ctx.write.exec("videos", "add", {title: t, link: l, additionalInformation: aI});
-                        }
+                            //Add video
+                            const t = title.trim();
+                            const l = link.trim();
+                            const aI = additionalInformation.trim();
 
-                        //Close popup
-                        setShowAddCatVideo(false);
-                    }}>Submit</button>
-                </div>
-            </AddCatVideo>
+                            if (t && l && aI) {
+                                ctx.write.exec("videos", "add", {title: t, link: l, additionalInformation: aI});
+                                //Close popup
+                                setShowAddCatVideo(false);
+                            } else {
+                                setAddInfoText("Please fill all fields");
+                            }
+                        }}>Submit</button>
+                    </div>
+                </AddCatVideo>
+            </div>
             <hr />
             <div style={{display: "grid", gridTemplateColumns: "repeat(5, 1fr)"}}>
                 {videos.map(video => (

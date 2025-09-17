@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { PluginCtx } from "../../../app/pluginRuntime";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Placeholder } from "react-bootstrap";
 
 export const SearchDrinkForm: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
   const current = ctx.read.entity("coffee") as { name: string; link: string }[];
@@ -21,21 +22,17 @@ export const SearchDrinkForm: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center bg-dark text-light p-3 vh-100">
-      <h3>
-        Enter your fav Coffee-Drink to get the recipe...{" "}
-        <span className="badge text-bg-secondary"></span>
-      </h3>
+      <h3>Tell us your favorite coffee, and we'll show you how to make it.</h3>
+      <Placeholder></Placeholder>
       <div className="input-group mb-3 w-50 mx-auto">
         <input
           type="text"
           className="form-control bg-dark text-light customph"
-          aria-label="Coffee Drink"
-          aria-describedby="button-addon2"
           onChange={(e) => {
             setInput(e.target.value);
             setSearched(false);
           }}
-          placeholder="Enter your drink..."
+          placeholder="e.g. Cappuccino, Espresso"
         />
         <button
           onClick={handleSearch}

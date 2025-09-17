@@ -21,16 +21,16 @@ export const AddDrinkForm = ({ ctx }: { ctx: PluginCtx }) => {
       </h3>
       <div className="mb-3 w-50 mx-auto">
         <Form onSubmit={handleSubmit}>
-          <Form.Group>
+          <Form.Group className="d-flex flex-column align-items-center">
             <Form.Control
               name="name"
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
               }}
-              className="m-1 bg-dark text-light customph"
+              className="m-2 bg-dark text-light customph w-70"
               type="text"
-              placeholder="enter drink name..."
+              placeholder="Name of the new coffee specialty"
             ></Form.Control>
             <Form.Control
               name="link"
@@ -38,13 +38,13 @@ export const AddDrinkForm = ({ ctx }: { ctx: PluginCtx }) => {
               onChange={(e) => {
                 setLink(e.target.value);
               }}
-              className="m-1 bg-dark text-light customph"
+              className="m-2 bg-dark text-light customph w-70"
               type="text"
-              placeholder="enter link to recipe..."
+              placeholder="Paste the recipe link here"
             ></Form.Control>
             <Button
               onClick={handleSubmit}
-              className="btn btn-dark btn-outline-light m-1"
+              className="btn btn-dark btn-outline-light m-2 w-50"
             >
               Submit
             </Button>

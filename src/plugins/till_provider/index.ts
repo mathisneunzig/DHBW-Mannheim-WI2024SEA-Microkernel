@@ -48,7 +48,13 @@ pluginManager.register({
         },
       ] as Coffee[],
       commands: {
-        addRecipe: () => {},
+        add: (state, payload: any) => {
+          const list = Array.isArray(state) ? state as { name: string; link: string }[] : [];
+          const name = String(payload?.name ?? "");
+          const link = String(payload?.link ?? "");
+          if (!name || !link) return list;
+          return [...list, { name: name, link:link }];
+        },
       },
     },
   ],

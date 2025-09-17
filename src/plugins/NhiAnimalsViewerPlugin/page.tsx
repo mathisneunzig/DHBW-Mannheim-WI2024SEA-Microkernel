@@ -119,16 +119,7 @@ export const AnimalsViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
               transform: "translateY(0) rotate(0deg)",
               border: "2px solid rgba(139, 195, 74, 0.2)"
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-12px) rotate(1deg)";
-              e.currentTarget.style.boxShadow = "0 20px 40px rgba(46, 125, 50, 0.25)";
-              e.currentTarget.style.borderColor = "rgba(76, 175, 80, 0.4)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0) rotate(0deg)";
-              e.currentTarget.style.boxShadow = "0 8px 32px rgba(46, 125, 50, 0.15)";
-              e.currentTarget.style.borderColor = "rgba(139, 195, 74, 0.2)";
-            }}
+            
           > 
             <div style={{ position: "relative", overflow: "hidden" }}>
               <img 
@@ -262,23 +253,14 @@ export const AnimalsViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
               transition: "all 0.3s ease",
               cursor: "pointer",
               border: "2px solid rgba(139, 195, 74, 0.2)"
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(139, 195, 74, 0.2)";
-              e.currentTarget.style.transform = "scale(1.1) rotate(90deg)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "rgba(139, 195, 74, 0.1)";
-              e.currentTarget.style.transform = "scale(1) rotate(0deg)";
-            }}
+            }}            
             >
               <CloseIcon 
                 onClick={() => setSelected(null)} 
                 style={{ 
                   cursor: "pointer",
                   fontSize: "1.8rem",
-                  color: "#4caf50",
-                  transition: "all 0.3s ease"
+                  color: "#4caf50"
                 }}
               />
             </div>
@@ -415,16 +397,6 @@ export const AnimalsViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
               border: "3px solid rgba(255, 255, 255, 0.3)"
             }}
             onClick={() => handleLike(selected)}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "scale(1.1) translateY(-4px)";
-              e.currentTarget.style.boxShadow = "0 15px 40px rgba(76, 175, 80, 0.6)";
-              e.currentTarget.style.background = "linear-gradient(135deg, #66bb6a, #4caf50)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "scale(1) translateY(0px)";
-              e.currentTarget.style.boxShadow = "0 8px 30px rgba(76, 175, 80, 0.4)";
-              e.currentTarget.style.background = "linear-gradient(135deg, #4caf50, #66bb6a)";
-            }}
             >
               <FavoriteIcon
                 style={{ 

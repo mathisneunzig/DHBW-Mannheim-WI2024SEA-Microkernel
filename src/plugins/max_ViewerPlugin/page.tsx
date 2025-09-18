@@ -12,7 +12,19 @@ export const OiiaiViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
   const [url, setUrl] = useState(link?.url ?? "");
   
   return (
-    <div style={{ padding: 16 }}>
+    
+    <div style={{ display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    }}>
+    <div style={{ display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "blueviolet",
+    width: "50%",
+    borderRadius: 12
+    }}>
+    <div style={{ padding: 16  }}>
       {" "}
       <img
         src={tommy}
@@ -45,7 +57,7 @@ export const OiiaiViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
           disabled={!ctx.can("oiiaiLink.write")}
         >
           {" "}
-          Speichern{" "}
+          Wechsel den Videolink!{" "}
         </button>{" "}
       </div>{" "}
       <div style={{ marginTop: 12 }}>
@@ -58,6 +70,8 @@ export const OiiaiViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
           KATZE KATZE KATZE{" "}
         </button>{" "}
       </div>{" "}
+    </div>
+    </div>
     </div>
   );
 };

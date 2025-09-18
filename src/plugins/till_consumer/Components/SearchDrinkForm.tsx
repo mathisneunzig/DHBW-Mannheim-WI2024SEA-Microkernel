@@ -22,9 +22,15 @@ export const SearchDrinkForm: React.FC<{
     setSearched(true);
     setInput("");
     if (result.length > 0) {
-      setSearchBarOpen(false);
+      setSearchBarOpen(true);
     }
   };
+
+  const clear = () =>{
+    setFiltered([]);
+    setSearchBarOpen(true);
+    setSearched(false)
+  }
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center bg-dark text-light p-3 vh-100">
@@ -53,7 +59,7 @@ export const SearchDrinkForm: React.FC<{
             </button>
           </div>
           <ul>
-            {filtered.map((recipe, idx) => (
+            {filtered.map((recipe) => (
               setSearchBarOpen(false),
               <div className="card">
                 <div className="card-header">{recipe.name}</div>
@@ -75,7 +81,18 @@ export const SearchDrinkForm: React.FC<{
       )}
       {!searchBarOpen &&
         <div>
-          TEST
+          {filtered.map((recipe) => (
+              <div className="container m-2">
+                  <h3>Great choice! Check out the coffee we discovered for you.</h3>
+                  <Placeholder></Placeholder>
+                  <div className="d-flex justify-content-between ">
+                  <a href={recipe.link} className="btn btn-outline-light">
+                    Get the Recipe
+                  </a>
+                  <button onClick={clear} className="btn btn-outline-light">Back to Search</button>
+                  </div>
+              </div>
+            ))}
         </div>
       }
     </div>

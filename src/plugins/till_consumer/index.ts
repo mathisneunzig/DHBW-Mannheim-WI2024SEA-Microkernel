@@ -6,7 +6,7 @@ pluginManager.register({
   route: "/coffee",
   component: CoffeePlugin,
   tile: "Coffee ☕",
-  color1: "#CED1F8",
+  color1: "#white",
   color2: "white",
   spin: 120,
   permissions: ["coffee.read", "coffee.write"],

@@ -18,7 +18,7 @@ export const ToDoViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
 
   return (
     <div style={{ padding: 16, width: "80%", margin: "0 auto", maxWidth: 1200 }}>
-      <h3>ToDo</h3>
+      <h3>ToDo 🐱</h3>
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {todos.map((todo) => (
           <div
@@ -36,14 +36,14 @@ export const ToDoViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: todo.done ? "#ae00ffff" : "transparent",
+                backgroundColor: todo.done ? "#00ff26ff" : "transparent",
                 color: "white",
                 fontSize: 14,
                 lineHeight: 1,
               }}
               title={todo.done ? "Erledigt" : "Als erledigt markieren"}
             >
-              {todo.done ? "🐱" : ""}
+              {todo.done ? "🐾" : ""}
             </div>
             <span
               style={{

@@ -6,8 +6,8 @@ pluginManager.register({
     route: "/toDo",
     component: ToDoViewerPage,
     tile: "ToDo Viewer",
-    color1: "#9b4fffff",
-    color2: "#f700ffff",
+    color1: "#1b851bff",
+    color2: "#9dff00ff",
     spin: 220,
     permissions: ["toDo.read","toDo.write"],
     dependsOn: [

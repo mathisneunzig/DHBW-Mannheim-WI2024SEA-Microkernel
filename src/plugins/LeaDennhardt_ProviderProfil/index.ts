@@ -4,7 +4,7 @@ import { SpotifyData } from "./type";
 pluginManager.register({
   id: "spotifyProvider",
   route: "/spotifyProvider",
-  component: () => null, 
+  component: () => null,
   tile: "Spotify Provider",
   color1: "#1DB954",
   color2: "#1ED760",

@@ -8,25 +8,25 @@ export default function Profil({ ctx }: { ctx: PluginCtx }) {
   const [isHovered, setIsHovered] = useState(false);
 
   // Spotify-URL aus Provider lesen
-  const [catchUrl, setTrackUrl] = useState<string | null>(null);
+  const [catchUrl, setUrl] = useState<string | null>(null);
   const [inputUrl, setInputUrl] = useState("");
 
   useEffect(() => {
     const data = (ctx.read as any).entity("SpotifyData") as SpotifyData[] | undefined;
     if (data && data.length > 0) {
-      setTrackUrl(data[0].spotifyUrl);
+      setUrl(data[0].spotifyUrl);
       setInputUrl(data[0].spotifyUrl ?? "");
     }
   }, [ctx.read]);
 
-  // Spotify-URL speichern 
-  const SaveTrack = () => {
+  // Spotify-URL speichern
+  const SaveUrl = () => {
     if (!inputUrl.startsWith("https://open.spotify.com/embed/")) {
-      alert("Bitte eine gültige Spotify Embed URL eingeben!");
+      alert("Bitte eine gültige Spotify Embed URL eingeben! Klicke in Spotify beim gewünschten Inhalt (Song, Playlist usw.) auf das Drei-Punkte-Symbol, wähle Teilen und dann Einbetten, um den Link aus dem HTML-Code zu kopieren.");
       return;
     }
     ctx.write.exec("SpotifyData", "add", inputUrl);
-    setTrackUrl(inputUrl);
+    setUrl(inputUrl);
   };
 
   // Profilbild hochladen
@@ -34,7 +34,7 @@ export default function Profil({ ctx }: { ctx: PluginCtx }) {
     const file = event.target.files?.[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        alert("Datei zu groß! Max. 5MB.");
+        alert("Datei zu groß! Max. 5MB!");
         return;
       }
       const reader = new FileReader();
@@ -144,6 +144,7 @@ export default function Profil({ ctx }: { ctx: PluginCtx }) {
                 alignItems: "center",
                 justifyContent: "center",
                 borderRadius: "50%",
+                pointerEvents: "none",
               }}
             >
               Ändern
@@ -152,10 +153,17 @@ export default function Profil({ ctx }: { ctx: PluginCtx }) {
         </div>
 
         <div style={{ marginTop: "16px", textAlign: "center" }}>
-          <label style={uploadButtonStyle}>
+          <label htmlFor="profileUpload" style={uploadButtonStyle}>
             Bild hochladen
             <input type="file" accept="image/*" onChange={ImageUpload} style={{ display: "none" }} />
           </label>
+          <input
+            id="profileUpload"
+            type="file"
+            accept="image/*"
+            onChange={ImageUpload}
+            style={{ display: "none" }}
+          />
           {profileImage && (
             <button style={removeButtonStyle} onClick={removeImage}>
               Entfernen
@@ -165,7 +173,7 @@ export default function Profil({ ctx }: { ctx: PluginCtx }) {
       </div>
 
       <div style={cardStyle}>
-        <h2>Meine Lieblingsmusik</h2>
+        <h2>Mein Lieblingslied 💚</h2>
         <div style={{ display: "flex", marginBottom: "12px" }}>
           <input
             type="text"
@@ -173,7 +181,7 @@ export default function Profil({ ctx }: { ctx: PluginCtx }) {
             onChange={(e) => setInputUrl(e.target.value)}
             style={{ flex: 1, padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }}
           />
-          <button style={saveButtonStyle} onClick={SaveTrack}>
+          <button style={saveButtonStyle} onClick={SaveUrl}>
             Speichern
           </button>
         </div>

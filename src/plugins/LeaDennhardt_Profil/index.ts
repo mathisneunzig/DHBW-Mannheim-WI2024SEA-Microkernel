@@ -8,6 +8,6 @@ pluginManager.register({
   tile: "Profil",
   color1: "DarkOliveGreen",
   color2: "AntiqueWhite",
-  spin: 45, 
+  spin: 45,
   permissions: ["profileImage.read", "profileImage.write"]
 });

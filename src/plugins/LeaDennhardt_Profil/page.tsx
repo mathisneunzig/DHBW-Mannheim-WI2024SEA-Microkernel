@@ -2,7 +2,29 @@ import React, { useState } from "react";
 
 export default function Profil() {
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(false); 
+  const [trackUrl, setTrackUrl] = useState(
+    "https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp?utm_source=generator"
+  );
+  const [inputUrl, setInputUrl] = useState(trackUrl);
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputUrl(event.target.value);
+  };
+
+  const handleSaveTrack = () => {
+    if (inputUrl.startsWith("https://open.spotify.com/embed/")) {
+      setTrackUrl(inputUrl);
+    } else {
+      alert("Bitte eine gültige Spotify Embed URL eingeben!");
+    }
+  };
+
+  const handleTrackChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const url = event.target.value;
+    if (url.startsWith("https://open.spotify.com/embed/")) {
+      setTrackUrl(url);
+    }
+  };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -16,6 +38,14 @@ export default function Profil() {
         setProfileImage(e.target?.result as string);
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // Einfache Validierung: Nur Spotify Embed URLs akzeptieren
+    const url = event.target.value;
+    if (url.startsWith("https://open.spotify.com/embed/")) {
+      setTrackUrl(url);
     }
   };
 
@@ -114,6 +144,21 @@ export default function Profil() {
     color: "#6b7280",
     textAlign: "center",
     marginTop: "12px",
+    };
+
+  const spotifyStyle: React.CSSProperties = {
+    borderRadius: "12px",
+    width: "100%",
+    height: "152px",
+    border: "0",
+  };
+
+
+  const saveButtonStyle: React.CSSProperties = {
+    ...buttonStyle,
+    backgroundColor: "#1DB954", // Spotify grün
+    color: "white",
+    marginLeft: "8px",
   };
 
   return (
@@ -186,6 +231,36 @@ export default function Profil() {
         <p style={infoTextStyle}>
           Unterstützte Formate: JPG, PNG, GIF (max. 5MB)
         </p>
+      </div>
+         <div style={cardStyle}>
+        <h2 style={subHeadingStyle}>Meine Lieblingsmusik</h2>
+
+        <div style={{ display: "flex", marginBottom: "12px" }}>
+          <input
+            type="text"
+            value={inputUrl}
+            onChange={handleInputChange}
+            placeholder="Spotify Embed URL einfügen! Klicke in Spotify beim gewünschten Inhalt auf das Drei-Punkte-Symbol, wähle Teilen und dann Einbetten, um den Link aus dem ausgegebenen HTML-Code zu kopieren."
+            style={{
+              flex: 1,
+              padding: "8px",
+              borderRadius: "6px",
+              border: "1px solid #ccc",
+            }}
+          />
+          <button style={saveButtonStyle} onClick={handleSaveTrack}>
+            Speichern
+          </button>
+        </div>
+
+        <iframe
+          style={spotifyStyle}
+          src={trackUrl}
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          allowFullScreen
+          title="Spotify Embed"
+        ></iframe>
       </div>
     </div>
   );

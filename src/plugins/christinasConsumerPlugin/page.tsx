@@ -9,8 +9,10 @@ export const christinasPlugin: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
   const [error, setError] = useState("");
   return (
   <div style={{ background:"#FFF7F3", padding:0, margin:0, textAlign:"center" }}>
+    {/* schönes Header */}
     <div style={{ margin:"32px auto", background:"#FAD0C4", borderRadius:24, padding:32 }}>
       <h3 style={{ color:"#C599B6", textAlign:"center", marginBottom:24 }}>Willkommen auf der Seite :3</h3>
+      {/* Image */}
       <img
       src={dackel}
       alt="Dackel"
@@ -27,6 +29,8 @@ export const christinasPlugin: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
       <div style={{ color:"#6D466B", fontWeight:500, marginBottom:12 }}>Welche Emotion beschreibt dich am besten:</div>
       <ul style={{ padding:0, marginBottom:24, alignItems:"center", justifyContent:"center", display:"flex", flexDirection:"column" }}>
 
+
+    {/*Alle Emotionen aus dem Provider Plugin einmal ausgeben mit Löschen Button hinter jedem*/}
     {emotions.map(e=> (
       <li key={e.id}style={{ display:"flex", alignItems:"center", gap:12, marginBottom:8 }}>
         <button
@@ -44,6 +48,8 @@ export const christinasPlugin: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
       </li>
     ))}
   </ul>
+
+  {/* Neue Emotionen hinzufügen */}
   <div style={{ color:"#6D466B", fontWeight:500, marginBottom:8 }}>Füge eine neue Emotion hinzu:</div>
   <div style={{ marginBottom:20 }}>
     <input value={emotion} onChange={e=>setEmotion(e.target.value)} placeholder="Name Neue Emotion" style={{ padding:8, borderRadius:8, border:"1px solid #E6B2BA", width:"25%" }} />
@@ -69,6 +75,7 @@ export const christinasPlugin: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
       Hinzufügen
     </button>
       </div>
+      {/* Fehler falls nicht beide Felder befüllt wurden */}
       {emotions.length === 0 && <div style={{ color:"#E6B2BA", textAlign:"center", marginTop:24 }}>Keine Emotionen vorhanden :0 </div>}
       </div>
     </div>

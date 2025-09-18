@@ -86,7 +86,8 @@ pluginManager.register({
                         },      
                       ] as LinkEntity[],      
                       
-                      commands: {        
+                      commands: {   
+                        // Neue Emotion hinzufügen     
                         add: (state, payload: any) => {          
                           const list = Array.isArray(state) ? (state as LinkEntity[]) : [];          
                           const emotion = String(payload?.text ?? "");          
@@ -95,7 +96,7 @@ pluginManager.register({
                           const id = "emotion" + Date.now(); // garantiert eindeutige ID          
                           return [...list, { id, emotion, url }];        
                         },  
-
+                        // Funktion für Löschen Button
                         remove: (state, payload: any) => {
                           const list = Array.isArray(state) ? (state as LinkEntity[]) : [];         
                           const id = String(payload?.id ?? "");          

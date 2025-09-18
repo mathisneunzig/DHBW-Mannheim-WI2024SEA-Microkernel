@@ -1,8 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Placeholder } from "react-bootstrap";
 import { PluginCtx } from "../../../app/pluginRuntime";
 import "../style.css";
+import coffeeImage from "../assets/cup.png"
 
 export const AddDrinkForm = ({ ctx }: { ctx: PluginCtx }) => {
   const [name, setName] = useState("");
@@ -16,6 +17,8 @@ export const AddDrinkForm = ({ ctx }: { ctx: PluginCtx }) => {
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center bg-dark text-light p-3 vh-100">
+      <img src={coffeeImage} width={100}/>
+      <Placeholder></Placeholder>
       <h3>
         Add New Drink... <span className="badge text-bg-secondary"></span>
       </h3>

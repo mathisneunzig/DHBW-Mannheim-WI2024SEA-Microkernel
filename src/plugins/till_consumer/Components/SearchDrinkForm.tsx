@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import type { PluginCtx } from "../../../app/pluginRuntime";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Placeholder } from "react-bootstrap";
+import coffeeImage from "../assets/cup.png"
 
 export const SearchDrinkForm: React.FC<{
   ctx: PluginCtx;
@@ -36,6 +37,8 @@ export const SearchDrinkForm: React.FC<{
     <div className="d-flex flex-column justify-content-center align-items-center bg-dark text-light p-3 vh-100">
       {searchBarOpen && (
         <>
+          <img src={coffeeImage} width={100}/>
+          <Placeholder></Placeholder>
           <h3>
             Tell me your favorite coffee, and i'll show you how to make it.
           </h3>
@@ -72,7 +75,7 @@ export const SearchDrinkForm: React.FC<{
             ))}
           </ul>
           {searched && filtered.length === 0 && (
-            <div className="alert alert-warning" role="alert">
+            <div className="alert alert-danger" role="alert">
               Nothing found... <br></br> Add your favorite drink by clicking
               'Add'
             </div>
@@ -82,15 +85,16 @@ export const SearchDrinkForm: React.FC<{
       {!searchBarOpen &&
         <div>
           {filtered.map((recipe) => (
-              <div className="container m-2">
+              <div className="d-flex flex-column justify-content-center align-items-center bg-dark text-light p-3 vh-100">
+                <img src={coffeeImage} width={100}/>
+              <Placeholder></Placeholder>
                   <h3>Great choice! Check out the coffee we discovered for you.</h3>
-                  <Placeholder></Placeholder>
-                  <div className="d-flex justify-content-between ">
-                  <a href={recipe.link} className="btn btn-outline-light">
+                  <div>
+                  <a href={recipe.link} className="btn btn-outline-light m-3">
                     Get the Recipe
                   </a>
-                  <button onClick={clear} className="btn btn-outline-light">Back to Search</button>
-                  </div>
+                  <button onClick={clear} className="btn btn-outline-light m-3">Back to Search</button>
+                </div>
               </div>
             ))}
         </div>

@@ -8,7 +8,7 @@ export default function Profil({ ctx }: { ctx: PluginCtx }) {
   const [isHovered, setIsHovered] = useState(false);
 
   // Spotify-URL aus Provider lesen
-  const [trackUrl, setTrackUrl] = useState<string | null>(null);
+  const [catchUrl, setTrackUrl] = useState<string | null>(null);
   const [inputUrl, setInputUrl] = useState("");
 
   useEffect(() => {
@@ -19,8 +19,8 @@ export default function Profil({ ctx }: { ctx: PluginCtx }) {
     }
   }, [ctx.read]);
 
-  // Spotify-URL speichern → Provider-Command
-  const handleSaveTrack = () => {
+  // Spotify-URL speichern 
+  const SaveTrack = () => {
     if (!inputUrl.startsWith("https://open.spotify.com/embed/")) {
       alert("Bitte eine gültige Spotify Embed URL eingeben!");
       return;
@@ -30,7 +30,7 @@ export default function Profil({ ctx }: { ctx: PluginCtx }) {
   };
 
   // Profilbild hochladen
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const ImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
@@ -120,7 +120,7 @@ export default function Profil({ ctx }: { ctx: PluginCtx }) {
 
   return (
     <div style={pageStyle}>
-      {/* Profilbild */}
+
       <div style={cardStyle}>
         <h2>Profilbild</h2>
         <div
@@ -154,7 +154,7 @@ export default function Profil({ ctx }: { ctx: PluginCtx }) {
         <div style={{ marginTop: "16px", textAlign: "center" }}>
           <label style={uploadButtonStyle}>
             Bild hochladen
-            <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: "none" }} />
+            <input type="file" accept="image/*" onChange={ImageUpload} style={{ display: "none" }} />
           </label>
           {profileImage && (
             <button style={removeButtonStyle} onClick={removeImage}>
@@ -164,7 +164,6 @@ export default function Profil({ ctx }: { ctx: PluginCtx }) {
         </div>
       </div>
 
-      {/* Spotify */}
       <div style={cardStyle}>
         <h2>Meine Lieblingsmusik</h2>
         <div style={{ display: "flex", marginBottom: "12px" }}>
@@ -174,14 +173,14 @@ export default function Profil({ ctx }: { ctx: PluginCtx }) {
             onChange={(e) => setInputUrl(e.target.value)}
             style={{ flex: 1, padding: "8px", border: "1px solid #ccc", borderRadius: "6px" }}
           />
-          <button style={saveButtonStyle} onClick={handleSaveTrack}>
+          <button style={saveButtonStyle} onClick={SaveTrack}>
             Speichern
           </button>
         </div>
-        {trackUrl && (
+        {catchUrl && (
           <iframe
             style={spotifyStyle}
-            src={trackUrl}
+            src={catchUrl}
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
             title="Spotify Embed"

@@ -34,7 +34,13 @@ pluginManager.register({
                     }
                 },
                 remove: (state, payload: any) => {
-                    console.log("Remove video");
+                    const videoList = Array.isArray(state) ? state as Video[] : [];
+                    const urlToDelete = String(payload.url);
+                    if (urlToDelete.trim() == "") {
+                        return
+                    }
+
+                    return videoList.filter(v => v.url != urlToDelete);
                 },
                 like: (state, payload: any) => {
                     const videoList = Array.isArray(state) ? state as Video[] : [];

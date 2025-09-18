@@ -5,12 +5,12 @@ import { SpotifyData } from "./type";
 pluginManager.register({
   id: "spotifyProvider",
   route: "/spotifyProvider",
-  component: () => null, // kein React-Component
+  component: () => null, 
   tile: "Spotify Provider",
   color1: "#1DB954",
   color2: "#1ED760",
   spin: 0,
-  permissions: ["SpotifyData.write", "SpotifyData.read"],
+  permissions: ["SpotifyData.write", "SpotifyData.read", "ImageRead"],
 
   provides:[
     {

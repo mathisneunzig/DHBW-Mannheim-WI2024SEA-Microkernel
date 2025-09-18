@@ -1,5 +1,5 @@
 import { pluginManager } from "../../app/pluginManager";
-import Profil from "./page";
+import  Profil  from "./page";
 
 pluginManager.register({
   id: "Profil",
@@ -9,5 +9,5 @@ pluginManager.register({
   color1: "DarkOliveGreen",
   color2: "AntiqueWhite",
   spin: 45,
-  permissions: ["profileImage.read", "profileImage.write"]
+  permissions: ["SpotifyData.read", "SpotifyData.write"]
 });

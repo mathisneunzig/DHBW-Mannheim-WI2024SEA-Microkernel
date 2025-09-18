@@ -30,9 +30,8 @@ export const CoffeePlugin: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
         </button>
       </div>
 
-      {openSearchBar === "search" && <SearchDrinkForm ctx={ctx} onSearch={() => {setOpenSearchBar("result")}} ></SearchDrinkForm>}
+      {openSearchBar === "search" && <SearchDrinkForm ctx={ctx}></SearchDrinkForm>}
       {openSearchBar === "add" && <AddDrinkForm ctx={ctx} />}
-      {openSearchBar === "result" && <div>Gefickt</div>}
     </div>
   );
 };

@@ -19,44 +19,24 @@ pluginManager.register({
         {
           spotifyUrl: "https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp?utm_source=generator"
         }
-      ],
+      ] ,
+
       commands: {
-        add: (newUrl: string) => {
-          // Validierung der URL
-          if (!newUrl.startsWith("https://open.spotify.com/embed/")) {
-            console.warn("Ungültige Spotify URL:", newUrl);
-            return;
-          }
-
-          // In der initialen Datenstruktur speichern
-          // Wir nehmen hier das erste Element in initial als Speicher
-          const dataItem = pluginManager.getEntity("SpotifyData")[0] as SpotifyData;
-          dataItem.spotifyUrl = newUrl;
-
-          // Optional: auch direkt im Kernel speichern, falls Permissions nötig
-          pluginManager.updateKernelData("entities.spotifyUrl", newUrl, "spotifyUrl.write");
-
-          console.log("Neue Spotify URL gespeichert:", newUrl);
-        }
+        add: (state, payload: any) => {
+          // 1. Stellt sicher, dass 'state' ein Objekt ist.
+          const currentState = (typeof state === 'object' && state !== null) ? state : {};
+          
+          // 2. Extrahiert die neue URL sicher aus dem payload.
+          const newUrl = String(payload?.url ?? "");
+ 
+          // 3. Wenn keine URL übergeben wurde, wird der alte Zustand zurückgegeben.
+          if (!newUrl) return currentState;
+ 
+          // 4. Gibt ein NEUES Objekt zurück, das die 'spotifyUrl' überschreibt.
+          return { ...currentState, spotifyUrl: newUrl };
+        },
       }
     }
   ]
 });
 
-
-// Funktion, um die Spotify URL zu setzen
-export function setSpotifyUrl(url: string) {
-  if (url.startsWith("https://open.spotify.com/embed/")) {
-    spotifyData.spotifyUrl = url;
-    // In Kernel speichern mit Permission
-    pluginManager.updateKernelData("entities.spotifyUrl", url, "spotifyUrl.write");
-    console.log("Spotify URL gesetzt:", url);
-  } else {
-    console.warn("Ungültige Spotify URL:", url);
-  }
-}
-
-// Funktion, um die Spotify URL zu bekommen
-export function getSpotifyUrl(): string | null {
-  return spotifyData.spotifyUrl;
-}

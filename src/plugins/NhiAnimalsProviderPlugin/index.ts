@@ -105,13 +105,6 @@ pluginManager.register({
             return list.filter(a => a.id !== id);
 
         },
-        update: (state, payload: any) => {
-          const animals = Array.isArray(state) ? state as Animal[] : [];
-          const { id, ...updates } = payload;
-          return animals.map(animal => 
-            animal.id === id ? { ...animal, ...updates } : animal
-          );
-        },
         like: (state, payload: any) => {
           const animals = Array.isArray(state) ? state as Animal[] : [];
           const {id} = payload;

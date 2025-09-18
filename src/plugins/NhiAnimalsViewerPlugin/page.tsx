@@ -90,7 +90,7 @@ export const AnimalsViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
           margin: "1rem 0 0 0",
           color: "#388e3c"
         }}>
-          Entdecken Sie die Wunder der Natur
+          Herzlich Willkommen zum DHBW Tiergarten
         </p>
     </div>
 
@@ -415,7 +415,7 @@ export const AnimalsViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
               }}>
                 {selected.likes ?? 0} Likes
               </span>
-            </div>
+            </div>            
           </div> 
         </div>                                              
       )}

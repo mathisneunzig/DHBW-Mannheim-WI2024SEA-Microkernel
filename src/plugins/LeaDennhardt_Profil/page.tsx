@@ -7,7 +7,7 @@ export default function Profil() {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) { // max. 5MB
+      if (file.size > 5 * 1024 * 1024) {
         alert("Datei zu groß! Max. 5MB.");
         return;
       }
@@ -23,73 +23,174 @@ export default function Profil() {
     setProfileImage(null);
   };
 
+  // Styles
+  const pageStyle: React.CSSProperties = {
+    padding: "24px",
+    fontFamily: "Arial, sans-serif",
+    backgroundColor: "#f9f9f9",
+    minHeight: "100vh",
+  };
+
+  const headingStyle: React.CSSProperties = {
+    fontSize: "24px",
+    fontWeight: "bold",
+    color: "darkolivegreen",
+    marginBottom: "8px",
+  };
+
+  const textStyle: React.CSSProperties = {
+    color: "#4b5563", // grau
+    marginBottom: "16px",
+  };
+
+  const cardStyle: React.CSSProperties = {
+    backgroundColor: "white",
+    borderRadius: "16px",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+    padding: "24px",
+    maxWidth: "400px",
+  };
+
+  const subHeadingStyle: React.CSSProperties = {
+    fontSize: "18px",
+    fontWeight: 600,
+    color: "darkolivegreen",
+    marginBottom: "16px",
+  };
+
+  const avatarContainerStyle: React.CSSProperties = {
+    width: "128px",
+    height: "128px",
+    borderRadius: "50%",
+    border: "4px solid darkolivegreen",
+    overflow: "hidden",
+    backgroundColor: "antiquewhite",
+    position: "relative",
+    margin: "0 auto",
+  };
+
+  const avatarImageStyle: React.CSSProperties = {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    objectPosition: "center",
+    display: "block",
+  };
+
+  const overlayStyle: React.CSSProperties = {
+    position: "absolute",
+    inset: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    color: "white",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "50%",
+    fontSize: "14px",
+  };
+
+  const buttonStyle: React.CSSProperties = {
+    padding: "8px 16px",
+    borderRadius: "8px",
+    border: "none",
+    cursor: "pointer",
+    fontWeight: 500,
+  };
+
+  const uploadButtonStyle: React.CSSProperties = {
+    ...buttonStyle,
+    backgroundColor: "darkolivegreen",
+    color: "white",
+  };
+
+  const removeButtonStyle: React.CSSProperties = {
+    ...buttonStyle,
+    backgroundColor: "#ef4444", // rot
+    color: "white",
+  };
+
+  const infoTextStyle: React.CSSProperties = {
+    fontSize: "12px",
+    color: "#6b7280",
+    textAlign: "center",
+    marginTop: "12px",
+  };
+
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold text-darkolivegreen">Profil</h1>
-      <p className="mt-2 text-gray-700">
-        Willkommen in deinem Profilbereich. Hier kannst du deine Daten verwalten
-        und dein Profilbild ändern.
+    <div style={pageStyle}>
+      <h1 style={headingStyle}>Profil</h1>
+      <p style={textStyle}>
+        Willkommen! Erstelle hier dein Profilbild um die Welt der Microkernels zu erkunden!
       </p>
 
-      <div className="mt-6">
-        <h2 className="text-lg font-semibold mb-4">Profilbild</h2>
+      <div style={cardStyle}>
+        <h2 style={subHeadingStyle}>Profilbild</h2>
 
-        {/* Profilbild Container mit Hintergrundbild */}
+        {/* Profilbild */}
         <div
-          className="relative inline-block w-32 h-32 rounded-full border-4 border-darkolivegreen overflow-hidden bg-antiquewhite flex items-center justify-center cursor-pointer transition-all duration-300 hover:shadow-lg"
+          style={avatarContainerStyle}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          style={{
-            backgroundImage: profileImage ? `url(${profileImage})` : undefined,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
         >
-          {/* Platzhalter, wenn kein Bild */}
-          {!profileImage && (
-            <div className="text-center text-darkolivegreen">
-              <div className="text-3xl mb-1">👤</div>
-              <div className="text-xs">Bild hinzufügen</div>
+          {profileImage ? (
+            <img src={profileImage} alt="Profil" style={avatarImageStyle} />
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "darkolivegreen",
+                fontSize: "12px",
+              }}
+            >
+              <div style={{ fontSize: "32px", marginBottom: "4px" }}>👤</div>
+              <div>Bild hinzufügen</div>
             </div>
           )}
 
-          {/* Overlay bei Hover */}
           {isHovered && profileImage && (
-            <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm">Ändern</span>
-            </div>
+            <div style={overlayStyle}>Ändern</div>
           )}
         </div>
 
-        {/* Upload + Löschen Buttons */}
-        <div className="mt-4 space-x-2">
-          {/* Upload Button */}
-          <label className="inline-block bg-darkolivegreen text-white px-4 py-2 rounded cursor-pointer hover:bg-opacity-80 transition-colors">
+        {/* Buttons */}
+        <div
+          style={{
+            marginTop: "24px",
+            display: "flex",
+            justifyContent: "center",
+            gap: "8px",
+          }}
+        >
+          <label style={uploadButtonStyle}>
             Bild hochladen
             <input
               type="file"
               accept="image/*"
               onChange={handleImageUpload}
-              className="hidden"
+              style={{ display: "none" }}
             />
           </label>
 
-          {/* Löschen Button */}
           {profileImage && (
-            <button
-              onClick={removeImage}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
-            >
-              Bild entfernen
+            <button style={removeButtonStyle} onClick={removeImage}>
+              Entfernen
             </button>
           )}
         </div>
 
-        <p className="mt-2 text-sm text-gray-600">
+        <p style={infoTextStyle}>
           Unterstützte Formate: JPG, PNG, GIF (max. 5MB)
         </p>
       </div>
     </div>
   );
 }
+
+
+
 

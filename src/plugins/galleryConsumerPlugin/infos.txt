@@ -1,0 +1,13 @@
+Hi Mathis!
+
+Das ist eine Kunstgalerie, bei welcher man ein Gemälde, den Titel und ihre dazugehörige Skizze hochladen kann.
+Sobald man das gemacht hat, erscheint die Skizze und der Titel auf der Seite. Je nachdem welches Bild man aus-
+wählt, sieht man unten das ausgewählte fertige Gemälde!
+
+Hier ist ein Beispiel zum hinzufügen:
+
+Titel: Glowing Medea
+Skizze: https://imgur.com/gallery/glowing-medea-sketch-mnx1eRn
+Fertiges Bild: https://imgur.com/gallery/glowing-medea-finished-CPBRUdZ
+
+Viel Spaß!

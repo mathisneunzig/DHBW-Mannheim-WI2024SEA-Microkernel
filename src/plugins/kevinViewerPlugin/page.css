@@ -1,0 +1,39 @@
+.flex{
+    display: flex;
+    border: 0.2em solid black;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    background: rgba(0, 0, 0, 0.9);
+    width: calc(100vw - 16px - 0.2em);
+    height: calc(100vh - 16px - 0.2em);
+    gap: 4em;
+    align-items: center;
+    flex-direction: column;
+}
+
+.gamba{
+    display: flex;
+    width: 100%;
+    gap: 10em;
+    align-items: center;
+    justify-content: center;
+}
+
+.gamblor{
+    width: 10em;
+    height: 10em;
+    background: white;
+    border: 1pt solid white;
+}
+
+.overengineeredButton{
+    font-size: 2em;
+    background: rgba(0, 200, 0, 0.9);
+    border: 0.02em solid white;
+    width: 10em;
+    height: 3em;
+}
+
+.overengineeredButton:active{
+    background: green;
+}

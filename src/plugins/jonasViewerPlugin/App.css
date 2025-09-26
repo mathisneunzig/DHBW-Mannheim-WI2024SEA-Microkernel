@@ -1,0 +1,52 @@
+.container {
+  background: linear-gradient(to bottom, red 33%, white 33%, white 66%, blue 33%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.memoryGrid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 1000px;
+}
+
+.card {
+  width: 150px;
+  height: 150px;
+  margin: 5px;
+  border: 1px solid #cccccc;
+  display: flex;
+  align-items: center;
+}
+
+.winMessage {
+  font-size: 50px;
+  font: 'Caveat';
+  color: #edf4ed;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.container h1, .container h2 {
+  font-family: 'Caveat', cursive;
+  text-align: center;
+}
+
+.container h1 {
+  font-size: 100px;
+  margin-bottom: 10px;
+}
+
+.container h2 {
+  font-size: 42px;
+  margin-bottom: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}

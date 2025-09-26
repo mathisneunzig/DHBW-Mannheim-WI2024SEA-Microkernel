@@ -1,13 +1,29 @@
 # Microkernel Plugin Aufgabe
 
 ## Ziel der Aufgabe
-Du entwickelst ein eigenes **Plugin** für das bestehende Microkernel-System.  
+Du entwickelst ein eigenes **Provider-Plugin** und ein **Consumer-Plugin** für das bestehende Microkernel-System.  
 Die Aufgabe wird **in Einzelarbeit** bearbeitet und ist mit **maximal 5 Punkten** bewertet.
 
-Dein Plugin soll:
+## Abgabe
+Die Abgabe erfolgt bis zum 18.09.2025 um 20:00 als Pull-Request an diesem GitHub-Repository
+
+## Anforderungen
+Deine Plugins sollen:
 1. Sich korrekt beim `pluginManager` registrieren.  
 2. **Mindestens eine Funktion** implementieren, die Daten **liest** und **verändert**.  
-3. Mit den **Permissions** arbeiten, die das Kernel-System bereitstellt.  
+3. Mit den **Permissions** arbeiten, die das Kernel-System bereitstellt.
+
+Das Provider-Plugin soll:
+1. Eine neue **Variable/Entity/Datenstruktur** sowie mindestens eine neue **Permission** bereitstellen.
+   
+Das Consumer-Plugin soll:
+1. Die neue Permission und Datenstruktur **nutzen**.
+
+## Regeln
+1. Pünktlich abgeben!
+2. Matrikelnummer angeben!
+3. Code selber schreiben: Kein Einsatz von AI-gesteuerten Tools!
+4. Nicht bei anderen "abgucken"!
 
 ---
 
@@ -16,7 +32,7 @@ Dein Plugin soll:
 Im Kernel existieren folgende Daten:
 
 ```ts
-type Address = {
+export type Address = {
   street: string;
   houseNr: string;
   zipCode: string;
@@ -24,7 +40,7 @@ type Address = {
   country: string;
 };
 
-type KernelData = {
+export type KernelData = {
   users: {
     id: string;
     firstName: string;
@@ -37,6 +53,7 @@ type KernelData = {
   shoppingList: { id: string; item: string; qty: number }[];
   profileImage: string | null;
   todos: { id: string; text: string; done: boolean }[];
+  entities: Record<string, unknown>;
 };
 ```
 
@@ -60,9 +77,9 @@ Diese musst du in deinem Plugin in der `permissions`-Liste angeben.
 
 ---
 
-## Anforderungen an dein Plugin
+## Infos zum Plugin
 
-- Dein Plugin muss im Ordner `src/plugins/<deinName>` liegen.  
+- Dein Plugin muss im Ordner `src/plugins/<deinName_suffix>` liegen.  
 - Es muss mindestens folgende Felder in `index.ts` enthalten:
 
 ```ts
@@ -77,10 +94,6 @@ pluginManager.register({
   permissions: ["<benötigte Permissions>"]
 });
 ```
-
-- Deine Page-Komponente soll:
-  - Daten **lesen** (z. B. `todos` oder `users`)  
-  - Daten **ändern** (z. B. neuen Todo-Eintrag hinzufügen, einen Todo abhaken, ein neues Item in die Einkaufsliste legen, Profilbild ändern, neuen User anlegen, etc.)  
 
 ---
 

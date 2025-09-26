@@ -28,7 +28,8 @@ export type Permission =
   | "users.read" | "users.write"
   | "shoppingList.read" | "shoppingList.write"
   | "profileImage.read" | "profileImage.write"
-  | "todos.read" | "todos.write";
+  | "todos.read" | "todos.write"
+  | "gallery.read" | "gallery.write";
 
 type Cmd =
   | {

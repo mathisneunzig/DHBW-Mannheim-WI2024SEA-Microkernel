@@ -24,9 +24,8 @@ Das Consumer-Plugin soll:
 
 ## Regeln
 1. Pünktlich abgeben!
-2. Matrikelnummer angeben!
-3. Code selber schreiben: Kein Einsatz von AI-gesteuerten Tools!
-4. Nicht bei anderen "abgucken"!
+2. Code selber schreiben: Kein Einsatz von AI-gesteuerten Tools!
+3. Nicht bei anderen "abgucken"!
 
 ---
 

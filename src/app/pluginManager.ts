@@ -2,7 +2,10 @@ import type React from "react";
 import type { Permission } from "./kernel";
 import type { PluginCtx } from "./pluginRuntime";
 
-export type EntityPermission = `${string}.read` | `${string}.write`;
+export type EntityPermission =
+  | `${string}.read`
+  | `${string}.write`
+  | `${string}.edit`;
 
 export interface ProvidedEntity {
   entity: string;
@@ -44,21 +47,29 @@ export class PluginManager {
   private headless = new Set<string>();
 
   register(plugin: Plugin) {
-    if (this.plugins.some(p => p.id === plugin.id)) return;
+    if (this.plugins.some((p) => p.id === plugin.id)) return;
     const errors: string[] = [];
-    if (!plugin.id || !plugin.route || !plugin.component || !plugin.tile) errors.push("Pflichtfelder fehlen (id/route/component/tile).");
-    if (!plugin.permissions?.length) errors.push("Keine Berechtigungen deklariert (permissions).");
+    if (!plugin.id || !plugin.route || !plugin.component || !plugin.tile)
+      errors.push("Pflichtfelder fehlen (id/route/component/tile).");
+    if (!plugin.permissions?.length)
+      errors.push("Keine Berechtigungen deklariert (permissions).");
     for (const perm of plugin.permissions ?? []) {
       const parts = String(perm).split(".");
-      if (parts.length !== 2 || (parts[1] !== "read" && parts[1] !== "write")) {
+      const validActions = ["read", "write", "edit"];
+      if (parts.length !== 2 || !validActions.includes(parts[1])) {
         errors.push(`Ungültige Permission: ${perm}`);
       }
     }
     for (const e of plugin.provides ?? []) {
-      if (!/^[a-z][a-z0-9_]*$/i.test(e.entity)) errors.push(`Ungültiger Entity-Name: ${e.entity}`);
-      if (this.provided.has(e.entity)) errors.push(`Entity-Kollision: ${e.entity}`);
+      if (!/^[a-z][a-z0-9_]*$/i.test(e.entity))
+        errors.push(`Ungültiger Entity-Name: ${e.entity}`);
+      if (this.provided.has(e.entity))
+        errors.push(`Entity-Kollision: ${e.entity}`);
     }
-    if (errors.length) { this.invalid.push({ id: plugin.id, errors }); return; }
+    if (errors.length) {
+      this.invalid.push({ id: plugin.id, errors });
+      return;
+    }
     for (const e of plugin.provides ?? []) {
       this.provided.set(e.entity, { by: plugin.id, def: e });
     }
@@ -69,7 +80,7 @@ export class PluginManager {
   finalize() {
     if (this.finalized) return;
     this.finalized = true;
-    const invalidIds = new Set(this.invalid.map(i => i.id));
+    const invalidIds = new Set(this.invalid.map((i) => i.id));
     for (const p of this.plugins) {
       const errs: string[] = [];
       for (const dep of p.dependsOn ?? []) {
@@ -79,30 +90,55 @@ export class PluginManager {
           errs.push(`Fehlender Provider für Entity: ${dep.entity}`);
           continue;
         }
-        if (invalidIds.has(prov.by)) errs.push(`Dependency-Provider fehlerhaft: ${dep.entity} von ${prov.by}`);
+        if (invalidIds.has(prov.by))
+          errs.push(
+            `Dependency-Provider fehlerhaft: ${dep.entity} von ${prov.by}`
+          );
         for (const perm of dep.permissions) {
           const need = String(perm);
-          if (!p.permissions.includes(need as any)) errs.push(`Fehlende Permission im Plugin: ${need}`);
+          if (!p.permissions.includes(need as any))
+            errs.push(`Fehlende Permission im Plugin: ${need}`);
         }
       }
       for (const perm of p.permissions) {
         const [entity] = String(perm).split(".");
-        const isBuiltin = entity === "users" || entity === "shoppingList" || entity === "profileImage" || entity === "todos";
+        const isBuiltin =
+          entity === "users" ||
+          entity === "shoppingList" ||
+          entity === "profileImage" ||
+          entity === "todos";
         if (!isBuiltin) {
-          if (!this.provided.get(entity)) errs.push(`Permission auf unbekannte Entity: ${perm}`);
+          if (!this.provided.get(entity))
+            errs.push(`Permission auf unbekannte Entity: ${perm}`);
         }
       }
       if (errs.length) this.invalid.push({ id: p.id, errors: errs });
     }
-    const stillValid = this.plugins.filter(p => !this.invalid.find(i => i.id === p.id));
+    const stillValid = this.plugins.filter(
+      (p) => !this.invalid.find((i) => i.id === p.id)
+    );
     this.plugins = stillValid;
   }
 
-  getPlugins() { return this.plugins; }
-  getVisiblePlugins() { return this.plugins.filter(p => !this.headless.has(p.id)); }
-  getInvalidPlugins() { return this.invalid; }
-  getProvidedEntities(): Array<{ entity: string; initial: unknown; commands: Record<string, (state: unknown, payload: unknown) => unknown> }> {
-    return Array.from(this.provided.values()).map(v => ({ entity: v.def.entity, initial: v.def.initial, commands: v.def.commands }));
+  getPlugins() {
+    return this.plugins;
+  }
+  getVisiblePlugins() {
+    return this.plugins.filter((p) => !this.headless.has(p.id));
+  }
+  getInvalidPlugins() {
+    return this.invalid;
+  }
+  getProvidedEntities(): Array<{
+    entity: string;
+    initial: unknown;
+    commands: Record<string, (state: unknown, payload: unknown) => unknown>;
+  }> {
+    return Array.from(this.provided.values()).map((v) => ({
+      entity: v.def.entity,
+      initial: v.def.initial,
+      commands: v.def.commands,
+    }));
   }
 }
 

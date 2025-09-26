@@ -112,6 +112,7 @@ export type KernelAPI = {
   execEntity: (entity: string, command: string, payload: unknown) => void;
 };
 
+
 const KernelCtx = createContext<KernelAPI | null>(null);
 
 type KernelProviderProps = {

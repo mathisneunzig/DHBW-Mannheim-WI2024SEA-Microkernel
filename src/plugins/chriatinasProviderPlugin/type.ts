@@ -1,0 +1,1 @@
+export type LinkEntity = { id: string; emotion: string; url: string };

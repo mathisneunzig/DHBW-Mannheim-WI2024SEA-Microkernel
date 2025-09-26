@@ -12,7 +12,7 @@ export const App: React.FC = () => {
   const [plugins, setPlugins] = useState(pluginManager.getPlugins());
   useEffect(() => setPlugins(pluginManager.getPlugins()), []);
   return (
-    <Router>
+    <Router> 
       <EntitiesRegistrar />
       <Routes>
         <Route path="/" element={<Home />} />

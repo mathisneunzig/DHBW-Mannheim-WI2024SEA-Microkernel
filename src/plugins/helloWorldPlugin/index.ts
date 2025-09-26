@@ -9,5 +9,5 @@ pluginManager.register({
   color1: "red",
   color2: "yellow",
   spin: 135,
-  permissions: ["users.read","todos.read","todos.write"]
+  permissions: ["users.read"],
 });

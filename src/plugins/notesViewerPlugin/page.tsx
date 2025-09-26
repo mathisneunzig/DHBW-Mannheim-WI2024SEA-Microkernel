@@ -10,7 +10,7 @@ export const NotesViewerPage: React.FC<{ ctx: PluginCtx }> = ({ ctx }) => {
       <h3>Notes</h3>
       <div style={{ marginBottom: 8 }}>
         <input value={text} onChange={e => setText(e.target.value)} placeholder="Neue Notiz" />
-        <button onClick={() => { const v = text.trim(); if (v) { ctx.write.exec("notes","add",{ text: v }); setText(""); } }} disabled={!ctx.can("notes.write")}>
+        <button onClick={() => { const v = text.trim(); if (v) { ctx.write.exec("notes","add",{ text: v });} }} disabled={!ctx.can("notes.write")}>
           Hinzufügen
         </button>
       </div>

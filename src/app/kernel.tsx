@@ -28,7 +28,8 @@ export type Permission =
   | "users.read" | "users.write"
   | "shoppingList.read" | "shoppingList.write"
   | "profileImage.read" | "profileImage.write"
-  | "todos.read" | "todos.write";
+  | "todos.read" | "todos.write"
+  | "gallery.read" | "gallery.write";
 
 type Cmd =
   | {
@@ -110,6 +111,7 @@ export type KernelAPI = {
   registerEntity: (entity: string, initial: unknown, commands: Record<string, (state: unknown, payload: unknown) => unknown>) => void;
   execEntity: (entity: string, command: string, payload: unknown) => void;
 };
+
 
 const KernelCtx = createContext<KernelAPI | null>(null);
 

@@ -1,5 +1,8 @@
 # Microkernel Plugin Aufgabe
 
+## Voraussetzungen
+node und npm müssen installiert sein!
+
 ## Ziel der Aufgabe
 Du entwickelst ein eigenes **Provider-Plugin** und ein **Consumer-Plugin** für das bestehende Microkernel-System.  
 Die Aufgabe wird **in Einzelarbeit** bearbeitet und ist mit **maximal 5 Punkten** bewertet.
@@ -21,9 +24,8 @@ Das Consumer-Plugin soll:
 
 ## Regeln
 1. Pünktlich abgeben!
-2. Matrikelnummer angeben!
-3. Code selber schreiben: Kein Einsatz von AI-gesteuerten Tools!
-4. Nicht bei anderen "abgucken"!
+2. Code selber schreiben: Kein Einsatz von AI-gesteuerten Tools!
+3. Nicht bei anderen "abgucken"!
 
 ---
 
@@ -79,7 +81,8 @@ Diese musst du in deinem Plugin in der `permissions`-Liste angeben.
 
 ## Infos zum Plugin
 
-- Dein Plugin muss im Ordner `src/plugins/<deinName_suffix>` liegen.  
+- Dein Plugin muss im Ordner `src/plugins/<deinName_suffix>` liegen.
+- Jedes Plugin bekommt einen eigenen Ordner!
 - Es muss mindestens folgende Felder in `index.ts` enthalten:
 
 ```ts
@@ -94,6 +97,12 @@ pluginManager.register({
   permissions: ["<benötigte Permissions>"]
 });
 ```
+
+---
+
+Dependencies installieren: `npm install`
+
+App starten: `npm run dev`
 
 ---
 

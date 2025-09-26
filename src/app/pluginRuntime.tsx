@@ -3,7 +3,9 @@ import { useKernel, type KernelData, type Permission } from "./kernel";
 import type { Plugin } from "./pluginManager";
 
 export type PluginCtx = {
-  can: (perm: Permission | `${string}.read` | `${string}.write`) => boolean;
+  can: (
+    perm: Permission | `${string}.read` | `${string}.write` | `${string}.edit`
+  ) => boolean;
   read: {
     users: () => Readonly<KernelData["users"]>;
     shoppingList: () => Readonly<KernelData["shoppingList"]>;
@@ -38,17 +40,33 @@ export const withPluginRuntime = (
     const perms = new Set<string>(plugin.permissions ?? []);
 
     const require = (p: string) => {
-      if (!perms.has(p)) throw new Error(`Plugin "${plugin.id}" fehlt Berechtigung: ${p}`);
+      if (!perms.has(p))
+        throw new Error(`Plugin "${plugin.id}" fehlt Berechtigung: ${p}`);
     };
 
     const ctx: PluginCtx = {
       can: (p) => perms.has(String(p)),
       read: {
-        users:        () => { require("users.read");        return kernel.data.users; },
-        shoppingList: () => { require("shoppingList.read"); return kernel.data.shoppingList; },
-        profileImage: () => { require("profileImage.read"); return kernel.data.profileImage; },
-        todos:        () => { require("todos.read");        return kernel.data.todos; },
-        entity:       (entity) => { require(`${entity}.read`); return kernel.data.entities[entity]; },
+        users: () => {
+          require("users.read");
+          return kernel.data.users;
+        },
+        shoppingList: () => {
+          require("shoppingList.read");
+          return kernel.data.shoppingList;
+        },
+        profileImage: () => {
+          require("profileImage.read");
+          return kernel.data.profileImage;
+        },
+        todos: () => {
+          require("todos.read");
+          return kernel.data.todos;
+        },
+        entity: (entity) => {
+          require(`${entity}.read`);
+          return kernel.data.entities[entity];
+        },
       },
       write: {
         addUser: (args) => {
@@ -63,12 +81,30 @@ export const withPluginRuntime = (
             birthday: args.birthday,
           });
         },
-        addShopping:   (item, qty) => { require("shoppingList.write"); kernel.dispatch({ type: "shopping.add", item, qty }); },
-        removeShopping:(id)        => { require("shoppingList.write"); kernel.dispatch({ type: "shopping.remove", id }); },
-        setProfileImage:(dataUrl)  => { require("profileImage.write"); kernel.dispatch({ type: "profile.set", dataUrl }); },
-        addTodo:       (text)      => { require("todos.write");        kernel.dispatch({ type: "todo.add", text }); },
-        toggleTodo:    (id)        => { require("todos.write");        kernel.dispatch({ type: "todo.toggle", id }); },
-        exec:          (entity, command, payload) => { require(`${entity}.write`); kernel.execEntity(entity, command, payload); },
+        addShopping: (item, qty) => {
+          require("shoppingList.write");
+          kernel.dispatch({ type: "shopping.add", item, qty });
+        },
+        removeShopping: (id) => {
+          require("shoppingList.write");
+          kernel.dispatch({ type: "shopping.remove", id });
+        },
+        setProfileImage: (dataUrl) => {
+          require("profileImage.write");
+          kernel.dispatch({ type: "profile.set", dataUrl });
+        },
+        addTodo: (text) => {
+          require("todos.write");
+          kernel.dispatch({ type: "todo.add", text });
+        },
+        toggleTodo: (id) => {
+          require("todos.write");
+          kernel.dispatch({ type: "todo.toggle", id });
+        },
+        exec: (entity, command, payload) => {
+          require(`${entity}.write`);
+          kernel.execEntity(entity, command, payload);
+        },
       },
     };
 
